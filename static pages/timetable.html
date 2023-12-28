@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>timetable</title>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+</head>
+<body>
+
+    <div id="headerContainer">
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            $.ajax({
+                url: './header.html',
+                type: 'GET',
+                dataType: 'html',
+                success: function(data) {
+                    $('#headerContainer').html(data);
+                },
+                error: function() {
+                    console.error('Failed to load header.html');
+                }
+            });
+        });
+    </script>
+
+<div class="container mt-5">
+    <h2 class="mb-4">高鐵時刻表查詢</h2>
+
+    <!-- /v2/Rail/THSR/DailyTimetable/OD/{OriginStationID}/to/{DestinationStationID}/{TrainDate} -->
+
+    <form>
+        <div class="form-group">
+            <label for="fromStation">出發站</label>
+            <select class="form-control" id="fromStation" name="fromStation">
+                <option value="0990">南港</option>
+                <option value="1000">台北</option>
+                <option value="1010">板橋</option>
+                <option value="1020">桃園</option>
+                <option value="1030">新竹</option>
+                <option value="1035">苗栗</option>
+                <option value="1040">台中</option>
+                <option value="1043">彰化</option>
+                <option value="1047">雲林</option>
+                <option value="1050">嘉義</option>
+                <option value="1060">台南</option>
+                <option value="1070">左營</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="toStation">到達站</label>
+            <select class="form-control" id="toStation" name="toStation">
+                <option value="0990">南港</option>
+                <option value="1000">台北</option>
+                <option value="1010">板橋</option>
+                <option value="1020">桃園</option>
+                <option value="1030">新竹</option>
+                <option value="1035">苗栗</option>
+                <option value="1040">台中</option>
+                <option value="1043">彰化</option>
+                <option value="1047">雲林</option>
+                <option value="1050">嘉義</option>
+                <option value="1060">台南</option>
+                <option value="1070">左營</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="departureDate">出發日期</label>
+            <input type="date" class="form-control" id="departureDate" name="departureDate">
+        </div>
+    </div>
+
+    <div class="container mt-5">
+        <div class="table-responsive">
+            <table class="table table-dark table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col">出發站</th>
+                        <th scope="col">到達站</th>
+                        <th scope="col">出發日期</th>
+                        <th scope="col">出發時間</th>
+                        <th scope="col">到達時間</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>台北</td>
+                        <td>台中</td>
+                        <td>2023-12-31</td>
+                        <td>06:15</td>
+                        <td>06:33</td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+    
+<div id="footerContainer">
+</div>
+
+<script>
+    $(document).ready(function() {
+        $.ajax({
+            url: './footer.html',
+            type: 'GET',
+            dataType: 'html',
+            success: function(data) {
+                $('#footerContainer').html(data);
+            },
+            error: function() {
+                console.error('Failed to load header.html');
+            }
+        });
+    });
+</script>
+    
+</body>
+</html>

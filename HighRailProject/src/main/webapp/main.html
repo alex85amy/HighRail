@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>高鐵訂票系統</title>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+</head>
+<body>
+
+    <div id="headerContainer">
+    </div>
+
+    <script>
+        $(document).ready(function() {           
+            $.ajax({
+                url: './header.html',
+                type: 'GET',
+                dataType: 'html',
+                success: function(data) {
+                    
+                    $('#headerContainer').html(data);
+                },
+                error: function() {
+                    console.error('Failed to load header.html');
+                }
+            });
+        });
+    </script>
+
+<H2>好看的圖片</H2>
+
+<div id="footerContainer">
+</div>
+
+<script>
+    $(document).ready(function() {
+        $.ajax({
+            url: './footer.html',
+            type: 'GET',
+            dataType: 'html',
+            success: function(data) {
+                $('#footerContainer').html(data);
+            },
+            error: function() {
+                console.error('Failed to load header.html');
+            }
+        });
+    });
+</script>
+
+</body>
+</html>
