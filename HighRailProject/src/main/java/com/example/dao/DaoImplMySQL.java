@@ -63,7 +63,7 @@ public class DaoImplMySQL implements Dao {
 
 	@Override
 	public Optional<Ticket> findTicketByTicketId(Integer ticketid) {
-		String sql = "select user_id, tran_id, car_no, site_no, price, state from ticket where ticket_id = ?";
+		String sql = "select ticket_Id, user_id, tran_id, car_no, site_no, price, state from ticket where ticket_id = ?";
 		try {
 			Ticket ticket = jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<>(Ticket.class), ticketid);
 			if (ticket != null) {
@@ -78,7 +78,7 @@ public class DaoImplMySQL implements Dao {
 
 	@Override
 	public List<Ticket> findAllTicketsByUserId(Integer userId) {
-		String sql = "select ticket_Id, tran_Id, car_No, site_No, price, state from ticket where user_Id = ? ";
+		String sql = "select ticket_Id, user_Id, tran_Id, car_No, site_No, price, state from ticket where user_Id = ? ";
 		List<Ticket> tickets = jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Ticket.class), userId);
 		tickets.forEach(this::enrichTicketWithDetails);
 		return tickets;
