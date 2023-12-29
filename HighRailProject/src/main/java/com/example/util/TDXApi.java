@@ -29,7 +29,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 public class TDXApi {
 
 	/**
-	 * aa4192696@gmail.com/5JJo3545jjo354+#
 	 * @param args
 	 * @throws Exception
 	 */
@@ -40,8 +39,8 @@ public class TDXApi {
 		List<NameValuePair> params = new ArrayList<>();
 		Map<String, String> headers = new HashMap<>();
 		params.add(new BasicNameValuePair("grant_type", "client_credentials"));
-		params.add(new BasicNameValuePair("client_id", "XXXXXXXXXX-XXXXXXXX-XXXX-XXXX")); // your clientId
-		params.add(new BasicNameValuePair("client_secret", "XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX")); // your clientSecret
+		params.add(new BasicNameValuePair("client_id", "aa4192696-6f0ed311-6b26-455a")); // your clientId
+		params.add(new BasicNameValuePair("client_secret", "f1b6747d-f8d7-4d9d-ac3b-d05efd8433cd")); // your clientSecret
 		
 		ObjectMapper objectMapper = new ObjectMapper();
 		objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
