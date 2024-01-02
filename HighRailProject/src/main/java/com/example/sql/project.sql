@@ -31,8 +31,8 @@ CREATE TABLE IF NOT EXISTS `project`.`TRAN` (
   PRIMARY KEY (`tran_id`))
 ENGINE = InnoDB;
 
--- 設置 AUTO_INCREMENT = 101
-alter table TRAN auto_increment = 101;
+-- 設置 AUTO_INCREMENT = 301
+alter table TRAN auto_increment = 301;
 
 
 -- -----------------------------------------------------
@@ -49,8 +49,8 @@ CREATE TABLE IF NOT EXISTS `project`.`USER` (
   PRIMARY KEY (`user_id`))
 ENGINE = InnoDB;
 
--- 設置 AUTO_INCREMENT = 501
-alter table USER auto_increment = 501;
+-- 設置 AUTO_INCREMENT = 101
+alter table USER auto_increment = 101;
 
 -- -----------------------------------------------------
 -- Table `project`.`TICKET`
@@ -64,7 +64,7 @@ CREATE TABLE IF NOT EXISTS `project`.`TICKET` (
   `car_no` INT NOT NULL,
   `site_no` VARCHAR(45) NOT NULL,
   `price` INT NOT NULL,
-  `state` INT NOT NULL,
+  `state` boolean default false,
   PRIMARY KEY (`ticket_id`, `user_id`, `tran_id`),
   INDEX `fk_tran_id_idx` (`tran_id` ASC) VISIBLE,
   INDEX `fk_user_id_idx` (`user_id` ASC) VISIBLE,
@@ -80,9 +80,21 @@ CREATE TABLE IF NOT EXISTS `project`.`TICKET` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
--- 設置 AUTO_INCREMENT = 301
-alter table TICKET auto_increment = 301;
+-- 設置 AUTO_INCREMENT = 501
+alter table TICKET auto_increment = 501;
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+
+
+-- 預設資料
+
+insert into user(user_Name, user_Password, user_Phone, user_Email) 
+values("aaa", "111", '0987654321', 'aaa@yahoo.com');
+
+insert into tran(tran_No, date, departureTime, arrivalTime) 
+values(2001, "2024-12-31", "16:10", "16:15");
+
+insert into ticket(user_Id, tran_Id, car_No, site_No, price) 
+values(101, 301, 10, "A", 1500);
