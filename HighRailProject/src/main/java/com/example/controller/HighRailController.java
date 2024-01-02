@@ -37,6 +37,12 @@ public class HighRailController {
 	public String main() {
 		return "main";
 	}
+
+	//登入頁面
+	@GetMapping(value = {"/login", "/", "/login/"})
+	public String loginpageString(HttpSession session) {
+		return "login";
+	}
 	
 	//登入
 	@PostMapping("/login")
@@ -53,19 +59,20 @@ public class HighRailController {
 			} else {
 				session.invalidate(); // session 過期失效
 				model.addAttribute("loginMessage", "密碼錯誤");
-				return "highrail/login";
+				return "login";
 			}
 		} else {
 			session.invalidate(); // session 過期失效
 			model.addAttribute("loginMessage", "無此使用者");
-			return "highrail/login";
+			return "login";
 		}
 	}
 	
+	//登出
 	@GetMapping("/logout")
 	public String logout(HttpSession session) {
 		session.invalidate();
-		return "redirect:/mvc/highrail/login";
+		return "redirect:/mvc/highrail/main";
 	}
 	
 	//註冊
@@ -110,11 +117,12 @@ public class HighRailController {
 	public String ticketlist(HttpSession session, Model model) {
 		// 1. 先找到 user 登入者
 		User user = (User)session.getAttribute("user");
-		
+		if(user != null) {
 		List<Ticket> tickets = dao.findAllTicketsByUserId(user.getUserId());
 		model.addAttribute("tickets", tickets);
-		
-		 return "highrail/ticketlist";
-		 		
+		 return "ticketlist";
+		}else {
+			return "login";
+		}
 	}
 }
