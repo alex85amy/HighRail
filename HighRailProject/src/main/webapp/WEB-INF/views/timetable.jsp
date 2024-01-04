@@ -1,9 +1,11 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>高鐵訂票系統</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>timetable</title>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 </head>
 <body>
@@ -12,13 +14,12 @@
     </div>
 
     <script>
-        $(document).ready(function() {           
+        $(document).ready(function() {
             $.ajax({
                 url: '../../header.html',
                 type: 'GET',
                 dataType: 'html',
                 success: function(data) {
-                    
                     $('#headerContainer').html(data);
                 },
                 error: function() {
@@ -29,9 +30,11 @@
     </script>
 
 <div class="container mt-5">
-    <h2 class="mb-4">高鐵訂票系統</h2>
+    <h2 class="mb-4">高鐵時刻表查詢</h2>
 
-    <form method="post" action="/HighRailProject/mvc/highrail/booking/choosing">
+    <!-- /v2/Rail/THSR/DailyTimetable/OD/{OriginStationID}/to/{DestinationStationID}/{TrainDate} -->
+
+    <form>
         <div class="form-group">
             <label for="fromStation">出發站</label>
             <select class="form-control" id="fromStation" name="fromStation">
@@ -72,26 +75,36 @@
             <label for="departureDate">出發日期</label>
             <input type="date" class="form-control" id="departureDate" name="departureDate">
         </div>
+    </div>
 
-        <div class="form-group">
-            <label for="quantity">張數</label>
-            <select class="form-control" id="quantity" name="quantity">
-                <option>1</option>
-                <option>2</option>
-                
-            </select>
+    <div class="container mt-5">
+        <div class="table-responsive">
+            <table class="table table-dark table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col">出發站</th>
+                        <th scope="col">到達站</th>
+                        <th scope="col">出發日期</th>
+                        <th scope="col">出發時間</th>
+                        <th scope="col">到達時間</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>台北</td>
+                        <td>台中</td>
+                        <td>2023-12-31</td>
+                        <td>06:15</td>
+                        <td>06:33</td>
+                    </tr>
+
+                </tbody>
+            </table>
         </div>
+    </div>
 
-        <!-- <div>
-            <label>價錢</label>
-            <p  class="fs-3">多少錢</p>
 
-        </div> -->
-
-        <button type="submit" class="btn btn-primary">確認</button>
-    </form>
-</div>
-
+    
 <div id="footerContainer">
 </div>
 
@@ -110,6 +123,6 @@
         });
     });
 </script>
-
+    
 </body>
 </html>

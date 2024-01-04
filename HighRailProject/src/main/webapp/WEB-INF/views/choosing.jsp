@@ -1,10 +1,11 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html lang="en">
-
+<html>
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ticketlist</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>高鐵訂票系統</title>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 </head>
 
@@ -36,10 +37,7 @@
             <table class="table table-dark table-hover">
                 <thead>
                     <tr>
-                        <th scope="col">車票編號</th>
-                        <th scope="col">列車編號</th>
-                        <th scope="col">車廂編號</th>
-                        <th scope="col">座位編號</th>
+                        <th scope="col">車號</th>
                         <th scope="col">出發站</th>
                         <th scope="col">到達站</th>
                         <th scope="col">出發日期</th>
@@ -47,15 +45,12 @@
                         <th scope="col">到達時間</th>
                         <th scope="col">張數</th>
                         <th scope="col">價錢</th>
-                        <th scope="col">取消訂票</th>
+                        <th scope="col">訂票</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <th scope="row">1</th>
-                        <td>101</td>
-                        <td>01</td>
-                        <td>C</td>
+                        <th scope="row">103</th>
                         <td>台北</td>
                         <td>台中</td>
                         <td>2023-12-25</td>
@@ -64,7 +59,7 @@
                         <td>2</td>
                         <td>1500</td>
                         <td>
-                            <button onClick="">取消訂票</button>
+                            <button onClick="">訂票</button>
                         </td>
                     </tr>
 
