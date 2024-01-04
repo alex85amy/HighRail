@@ -58,26 +58,26 @@
 						<div style="color: red">${ registerMessage }</div>
 						<div>
 							<label for="username" class="form-label">Username</label>
-							<sp:input type="text" class="form-control" id="username" path="username" name="username"
-								value="" required />
+							<sp:input type="text" class="form-control" path="userName"
+								value="" required="required" />
 							<div class="invalid-feedback">請輸入Username</div>
 						</div>
 						<div>
 							<label for="password" class="form-label">Password</label>
-							<sp:input type="text" class="form-control" id="password" path="password" name="password"
-								value="" required />
+							<sp:input type="text" class="form-control" path="userPassword"
+								value="" required="required" />
 							<div class="invalid-feedback">請輸入Password</div>
 						</div>
 						<div>
 							<label for="email" class="form-label">Email</label>
-							<sp:input type="text" class="form-control" id="email" path="email" name="email" value=""
-								required />
+							<sp:input type="text" class="form-control" path="userEmail" value=""
+								required="required" />
 							<div class="invalid-feedback">請輸入Email</div>
 						</div>
 						<div>
 							<label for="phone" class="form-label">Phone</label>
-							<sp:input type="text" class="form-control" id="phone" path="phone" name="phone" value=""
-								required />
+							<sp:input type="text" class="form-control" path="userPhone" value=""
+								required="required" />
 							<div class="invalid-feedback">請輸入Phone</div>
 						</div>
 						<!-- <div>

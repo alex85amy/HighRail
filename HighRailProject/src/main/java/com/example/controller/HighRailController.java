@@ -77,7 +77,7 @@ public class HighRailController {
 	
 	//註冊頁面
 		@GetMapping("/register")
-		public String registerpageString(HttpSession session) {
+		public String registerpageString(@ModelAttribute User user,HttpSession session) {
 			return "register";
 		}
 	
