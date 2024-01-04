@@ -1,0 +1,11 @@
+ <!-- 設定 MySQL 的連線資源 -->
+    <Resource
+    	name="jdbc/web"
+    	type="javax.sql.DataSource"
+    	username="web"
+    	password="12345678"
+    	driverClassName="com.mysql.cj.jdbc.Driver"
+    	url="jdbc:mysql://localhost:3306/web?serverTimezone=Asia/Taipei"
+     />
+    
+	<CookieProcessor className="org.apache.tomcat.util.http.Rfc6265CookieProcessor" sameSiteCookies="strict" />
