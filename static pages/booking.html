@@ -14,7 +14,7 @@
     <script>
         $(document).ready(function() {           
             $.ajax({
-                url: './header.html',
+                url: '../../header.html',
                 type: 'GET',
                 dataType: 'html',
                 success: function(data) {
@@ -31,7 +31,7 @@
 <div class="container mt-5">
     <h2 class="mb-4">高鐵訂票系統</h2>
 
-    <form method="post" action="">
+    <form method="post" action="/HighRailProject/mvc/highrail/booking/choosing">
         <div class="form-group">
             <label for="fromStation">出發站</label>
             <select class="form-control" id="fromStation" name="fromStation">
@@ -98,7 +98,7 @@
 <script>
     $(document).ready(function() {
         $.ajax({
-            url: './footer.html',
+            url: '../../footer.html',
             type: 'GET',
             dataType: 'html',
             success: function(data) {

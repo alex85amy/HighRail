@@ -1,7 +1,8 @@
-<!--  
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+    <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="sp" uri="http://www.springframework.org/tags/form"%>
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
--->
 <html>
 	<head>
 		<meta charset="UTF-8">
@@ -48,7 +49,7 @@
     </script>
 	
 		<div class="d-flex align-items-center justify-content-center vh-100 ">
-			<form  modelAttribute="user" class="needs-validation"  action="/HighRailProject/mvc/highrail/register" method="post" >
+			<sp:form modelAttribute="user" class="needs-validation"  action="/HighRailProject/mvc/highrail/register" method="post" >
 				<h4 class="text-center">Register</h4>
 				<p class="text-center text-danger fw-bold"> 請輸入個人資料 </p>
 				<div style="color: red">${ registerMessage }</div>
@@ -80,7 +81,7 @@
 				<div class="d-flex justify-content-center mt-5">
 					<button class="btn btn-primary w-100" type="submit">Register</button>
 				</div>
-			</form>
+			</sp:form>
 			
 		</div>
 		
