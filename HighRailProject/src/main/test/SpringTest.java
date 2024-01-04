@@ -14,7 +14,7 @@ public class SpringTest {
 
 		DaoImplMySQL dao = ctx.getBean("daoImplMySQL", DaoImplMySQL.class);
 		
-		List<Ticket> tickets = dao.findAllTicketsByUserId(501);
+		List<Ticket> tickets = dao.findAllTicketsByUserId(101);
 		
 		System.out.println(tickets);
 	}

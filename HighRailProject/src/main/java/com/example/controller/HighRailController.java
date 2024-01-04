@@ -39,7 +39,7 @@ public class HighRailController {
 	}
 
 	//登入頁面
-	@GetMapping(value = {"/login", "/", "/login/"})
+	@GetMapping("/login")
 	public String loginpageString(HttpSession session) {
 		return "login";
 	}
@@ -75,6 +75,12 @@ public class HighRailController {
 		return "redirect:/mvc/highrail/main";
 	}
 	
+	//註冊頁面
+		@GetMapping("/register")
+		public String registerpageString(HttpSession session) {
+			return "register.jsp";
+		}
+	
 	//註冊
 	@PostMapping("/register")
 	public String register(@ModelAttribute User user, Model model ) {		
@@ -89,7 +95,7 @@ public class HighRailController {
 		}
 	}
 	
-	//時刻表
+	//時刻表頁面
 	@GetMapping("/timetable")
 	public String timeTable() {
 		
@@ -98,8 +104,16 @@ public class HighRailController {
 	
 	//訂票頁面
 	@GetMapping("/booking")
-	public String booking(HttpSession session) {
+	public String booking(HttpSession session, Model model) {
+		
 		return "booking";
+		
+//		if(user != null) {
+//			return "booking";
+//		}else {
+//			return "redirect:/mvc/highrail/login";
+//		}
+		
 	}
 	
 	//選票頁面
@@ -117,12 +131,17 @@ public class HighRailController {
 	public String ticketlist(HttpSession session, Model model) {
 		// 1. 先找到 user 登入者
 		User user = (User)session.getAttribute("user");
-		if(user != null) {
+		
 		List<Ticket> tickets = dao.findAllTicketsByUserId(user.getUserId());
 		model.addAttribute("tickets", tickets);
-		 return "ticketlist";
-		}else {
-			return "login";
-		}
+		return "ticketlist";
+		
+//		if(user != null) {
+//		List<Ticket> tickets = dao.findAllTicketsByUserId(user.getUserId());
+//		model.addAttribute("tickets", tickets);
+//		 return "ticketlist";
+//		}else {
+//			return "redirect:/mvc/highrail/login";
+//		}
 	}
 }
