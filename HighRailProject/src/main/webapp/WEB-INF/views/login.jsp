@@ -33,24 +33,7 @@
 
 <body>
 
-  <div id="headerContainer">
-    </div>
-
-    <script>
-        $(document).ready(function() {
-            $.ajax({
-                url: '../../header.html',
-                type: 'GET',
-                dataType: 'html',
-                success: function(data) {
-                    $('#headerContainer').html(data);
-                },
-                error: function() {
-                    console.error('Failed to load header.html');
-                }
-            });
-        });
-    </script>
+ <%@ include file="./header.jsp" %>
     
 	<div class="d-flex align-items-center justify-content-center vh-100 ">
 		<form id="loginForm"  class="needs-validation"  action="/HighRailProject/mvc/highrail/login" method="post">
@@ -81,24 +64,8 @@
 		</form>
 	</div>
 	
-	<div id="footerContainer">
-</div>
+<%@ include file="./footer.jsp" %>
 
-<script>
-    $(document).ready(function() {
-        $.ajax({
-            url: '../../footer.html',
-            type: 'GET',
-            dataType: 'html',
-            success: function(data) {
-                $('#footerContainer').html(data);
-            },
-            error: function() {
-                console.error('Failed to load header.html');
-            }
-        });
-    });
-</script>
 </body>
 
 </html>

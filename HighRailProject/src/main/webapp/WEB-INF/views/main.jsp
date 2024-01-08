@@ -1,55 +1,22 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+  <!DOCTYPE html>
+  <html>
+
+  <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>高鐵訂票系統</title>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-</head>
-<body>
+  </head>
 
-    <div id="headerContainer">
-    </div>
+  <body>
 
-    <script>
-        $(document).ready(function() {           
-            $.ajax({
-                url: '../../header.html',
-                type: 'GET',
-                dataType: 'html',
-                success: function(data) {
-                    
-                    $('#headerContainer').html(data);
-                },
-                error: function() {
-                    console.error('Failed to load header.html');
-                }
-            });
-        });
-    </script>
+    <%@ include file="./header.jsp" %>
 
-<H2>好看的圖片</H2>
+      <H2>好看的圖片</H2>
 
-<div id="footerContainer">
-</div>
+     <%@ include file="./footer.jsp" %>
 
-<script>
-    $(document).ready(function() {
-        $.ajax({
-            url: '../../footer.html',
-            type: 'GET',
-            dataType: 'html',
-            success: function(data) {
-                $('#footerContainer').html(data);
-            },
-            error: function() {
-                console.error('Failed to load header.html');
-            }
-        });
-    });
-</script>
+  </body>
 
-</body>
-</html>
+  </html>

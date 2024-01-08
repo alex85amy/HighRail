@@ -9,6 +9,8 @@
 				<title>Register</title>
 				<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet">
 				<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+				<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/purecss@3.0.0/build/pure-min.css">
+	
 				<style>
 					body {
 						font-family: Arial, sans-serif;
@@ -31,31 +33,16 @@
 			</head>
 
 			<body>
-				<div id="headerContainer">
-				</div>
-
-				<script>
-					$(document).ready(function () {
-						$.ajax({
-							url: '../../header.html',
-							type: 'GET',
-							dataType: 'html',
-							success: function (data) {
-								$('#headerContainer').html(data);
-							},
-							error: function () {
-								console.error('Failed to load header.html');
-							}
-						});
-					});
-				</script>
+				 <%@ include file="./header.jsp" %>
 
 				<div class="d-flex align-items-center justify-content-center vh-100 ">
 					<sp:form modelAttribute="user" class="needs-validation"
 						action="/HighRailProject/mvc/highrail/register" method="post">
 						<h4 class="text-center">Register</h4>
 						<p class="text-center text-danger fw-bold"> 請輸入個人資料 </p>
+						
 						<div style="color: red">${ registerMessage }</div>
+						
 						<div>
 							<label for="username" class="form-label">Username</label>
 							<sp:input type="text" class="form-control" path="userName"
@@ -92,24 +79,8 @@
 
 				</div>
 
-				<div id="footerContainer">
-				</div>
-
-				<script>
-					$(document).ready(function () {
-						$.ajax({
-							url: '../../footer.html',
-							type: 'GET',
-							dataType: 'html',
-							success: function (data) {
-								$('#footerContainer').html(data);
-							},
-							error: function () {
-								console.error('Failed to load header.html');
-							}
-						});
-					});
-				</script>
+			<%@ include file="./footer.jsp" %>
+			
 			</body>
 
 			</html>

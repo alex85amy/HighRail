@@ -10,25 +10,7 @@
 </head>
 <body>
 
-    <div id="headerContainer">
-    </div>
-
-    <script>
-        $(document).ready(function() {           
-            $.ajax({
-                url: '../../header.html',
-                type: 'GET',
-                dataType: 'html',
-                success: function(data) {
-                    
-                    $('#headerContainer').html(data);
-                },
-                error: function() {
-                    console.error('Failed to load header.html');
-                }
-            });
-        });
-    </script>
+     <%@ include file="./header.jsp" %>
 
 <div class="container mt-5">
     <h2 class="mb-4">高鐵訂票系統</h2>
@@ -94,24 +76,7 @@
     </form>
 </div>
 
-<div id="footerContainer">
-</div>
-
-<script>
-    $(document).ready(function() {
-        $.ajax({
-            url: '../../footer.html',
-            type: 'GET',
-            dataType: 'html',
-            success: function(data) {
-                $('#footerContainer').html(data);
-            },
-            error: function() {
-                console.error('Failed to load header.html');
-            }
-        });
-    });
-</script>
+<%@ include file="./footer.jsp" %>
 
 </body>
 </html>

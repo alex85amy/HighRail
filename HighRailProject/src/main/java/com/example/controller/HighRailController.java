@@ -87,6 +87,7 @@ public class HighRailController {
 		Optional<User> userOpt = dao.findUserByUsername(user.getUserName());
 		if(userOpt.isPresent()) {
 			model.addAttribute("registerMessage", "使用者名稱重複");
+			System.out.println("使用者名稱重複");
 			return "redirect:/mvc/highrail/register";
 		}else {
 			
