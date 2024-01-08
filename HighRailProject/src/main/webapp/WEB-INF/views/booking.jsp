@@ -51,6 +51,8 @@
                 <option value="1070">左營</option>
             </select>
         </div>
+        
+        <div style="color: red">${ bookingMessage }</div>
 
         <div class="form-group">
             <label for="departureDate">出發日期</label>

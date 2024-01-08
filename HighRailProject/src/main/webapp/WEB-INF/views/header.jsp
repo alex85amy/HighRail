@@ -43,7 +43,7 @@
                 </c:if>
                 
                 <c:if test="${ not empty user }">
-                 <p class="text-black me-3">Welcome, ${ user.userName } ! 
+                 <p class="text-black me-3 mb-0">Welcome, ${ user.userName } ! 
                  <a href="${ pageContext.request.contextPath }/mvc/highrail/logout" class="btn btn-outline-danger">Logout</a></p>
                 </c:if> 
                 <!--

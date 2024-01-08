@@ -122,9 +122,16 @@ public class HighRailController {
 	public String cooking(@RequestParam("fromStation") Integer fromStation,
 			@RequestParam("toStation") Integer toStation,
 			@RequestParam("departureDate") String departureDate,
-			@RequestParam("quantity") Integer quantity){
+			@RequestParam("quantity") Integer quantity,
+			Model model){
+		if(fromStation.equals(toStation)) {
+			
+			model.addAttribute("bookingMessage", "起點終點重複");
+			return "redirect:/mvc/highrail//booking/choosing";
+		}else {
+			return "choosing";
+		}
 		
-		return "choosing";
 	}
 	
 	//查看票夾
