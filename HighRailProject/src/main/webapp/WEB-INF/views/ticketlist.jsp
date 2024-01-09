@@ -8,6 +8,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ticketlist</title>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+	<script type="text/javascript">
+				function cancelticket(ticketId) {
+				window.location.href='./ticketlist/cancel?ticketId=' + ticketId;
+			}
+			
+		</script>
+
 </head>
 
 <body>
@@ -39,7 +46,6 @@
                 <c:forEach items="${ tickets }" var="ticket">
                     <tr>
                         <th scope="row">1</th>
-                        <td>${ ticket.ticketId }</td>
                         <td>${ ticket.tran.tranNo }</td>
                         <td>${ ticket.carNo }</td>
                         <td>${ ticket.siteNo }</td>
@@ -49,8 +55,8 @@
                         <td>${ ticket.tran.departureTime }</td>
                         <td>${ ticket.tran.arrivalTime }</td>
                         <td>${ ticket.price }</td>
-                        <td>
-                            <button onClick="">取消訂票</button>
+                        <td>                     
+                           <button onClick="cancelticket(${ ticket.ticketId })">取消訂票</button>
                         </td>
                     </tr>
                     </c:forEach>

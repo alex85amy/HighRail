@@ -119,7 +119,7 @@ public class HighRailController {
 	
 	//選票頁面
 	@PostMapping("/booking/choosing")
-	public String cooking(@RequestParam("fromStation") Integer fromStation,
+	public String choosing(@RequestParam("fromStation") Integer fromStation,
 			@RequestParam("toStation") Integer toStation,
 			@RequestParam("departureDate") String departureDate,
 			@RequestParam("quantity") Integer quantity,
@@ -132,6 +132,18 @@ public class HighRailController {
 			return "choosing";
 		}
 		
+	}
+	
+//	@GetMapping("/booking/choosing/result")
+//	public String result() {
+//		
+//	}
+	
+	@GetMapping("/ticketlist/cancel")
+	public String cancelticket(@RequestParam("ticketId") Integer ticketId,
+								HttpSession session) {
+		dao.removeTicket(ticketId);
+		return "redirect:/mvc/highrail/ticketlist";
 	}
 	
 	//查看票夾
