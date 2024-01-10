@@ -56,7 +56,7 @@
 
         <div class="form-group">
             <label for="departureDate">出發日期</label>
-            <input type="date" class="form-control" id="departureDate" name="departureDate">
+            <input type="date" class="form-control" id="departureDate" name="departureDate" required>
         </div>
 
         <div class="form-group">

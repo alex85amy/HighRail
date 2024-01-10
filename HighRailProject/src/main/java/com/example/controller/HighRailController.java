@@ -77,7 +77,7 @@ public class HighRailController {
 	
 	//註冊頁面
 		@GetMapping("/register")
-		public String registerpageString(@ModelAttribute User user,HttpSession session) {//
+		public String registerpageString(@ModelAttribute User user,HttpSession session) {
 			return "register";
 		}
 	
@@ -88,7 +88,7 @@ public class HighRailController {
 		if(userOpt.isPresent()) {
 			model.addAttribute("registerMessage", "使用者名稱重複");
 			System.out.println("使用者名稱重複");
-			return "redirect:/mvc/highrail/register";
+			return "register";
 		}else {
 			
 		dao.addUser(user);
@@ -110,8 +110,9 @@ public class HighRailController {
 								@RequestParam("departureDate") String departureDate,Model model) {
 			if(fromStation.equals(toStation)) {
 			
-			model.addAttribute("bookingMessage", "起點終點重複");
-			return "redirect:/mvc/highrail/timetable";
+			model.addAttribute("checkingMessage", "起點終點重複");
+			System.out.println("起點終點重複");
+			return "timetable";
 		}else {
 			model.addAttribute("fromStation", fromStation);
 			model.addAttribute("toStation", toStation);
@@ -136,7 +137,7 @@ public class HighRailController {
 		if(fromStation.equals(toStation)) {
 			
 			model.addAttribute("bookingMessage", "起點終點重複");
-			return "redirect:/mvc/highrail/booking/choosing";
+			return "booking";
 		}else {
 			return "choosing";
 		}

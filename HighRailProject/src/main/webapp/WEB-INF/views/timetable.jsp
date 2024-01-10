@@ -17,7 +17,7 @@
 
     <!-- /v2/Rail/THSR/DailyTimetable/OD/{OriginStationID}/to/{DestinationStationID}/{TrainDate} -->
 
-    <form>
+    <form method="post" action="/HighRailProject/mvc/highrail/timetable">
         <div class="form-group">
             <label for="fromStation">出發站</label>
             <select class="form-control" id="fromStation" name="fromStation">
@@ -53,10 +53,12 @@
                 <option value="1070">左營</option>
             </select>
         </div>
+        
+        <div style="color: red">${ checkingMessage }</div>
 
         <div class="form-group">
             <label for="departureDate">出發日期</label>
-            <input type="date" class="form-control" id="departureDate" name="departureDate">
+            <input type="date" class="form-control" id="departureDate" name="departureDate" required>
         </div>
         
         <button type="submit" class="btn btn-primary mt-2">確認</button>
