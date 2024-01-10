@@ -103,6 +103,19 @@ public class HighRailController {
 		return "timetable";
 	}
 	
+	@PostMapping("/timetable")
+	public String timeTableCheck(@RequestParam("fromStation") Integer fromStation,
+								@RequestParam("toStation") Integer toStation,
+								@RequestParam("departureDate") String departureDate,Model model) {
+			if(fromStation.equals(toStation)) {
+			
+			model.addAttribute("bookingMessage", "起點終點重複");
+			return "redirect:/mvc/highrail/timetable";
+		}else {
+			return "choosing";
+		}
+	}
+	
 	//訂票頁面
 	@GetMapping("/booking")
 	public String booking(HttpSession session, Model model) {
@@ -120,14 +133,13 @@ public class HighRailController {
 	//選票頁面
 	@PostMapping("/booking/choosing")
 	public String choosing(@RequestParam("fromStation") Integer fromStation,
-			@RequestParam("toStation") Integer toStation,
-			@RequestParam("departureDate") String departureDate,
-			@RequestParam("quantity") Integer quantity,
-			Model model){
+							@RequestParam("toStation") Integer toStation,
+							@RequestParam("departureDate") String departureDate,
+							@RequestParam("quantity") Integer quantity,Model model){
 		if(fromStation.equals(toStation)) {
 			
 			model.addAttribute("bookingMessage", "起點終點重複");
-			return "redirect:/mvc/highrail//booking/choosing";
+			return "redirect:/mvc/highrail/booking/choosing";
 		}else {
 			return "choosing";
 		}

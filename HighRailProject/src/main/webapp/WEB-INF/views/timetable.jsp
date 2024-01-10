@@ -58,6 +58,9 @@
             <label for="departureDate">出發日期</label>
             <input type="date" class="form-control" id="departureDate" name="departureDate">
         </div>
+        
+        <button type="submit" class="btn btn-primary mt-2">確認</button>
+        </form>
     </div>
 
     <div class="container mt-5">
