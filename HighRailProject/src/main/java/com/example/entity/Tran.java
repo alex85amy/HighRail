@@ -11,6 +11,8 @@ public class Tran {
     private Integer tranId; 
     private Integer tranNo; 
     private String date;
+    private String departureStation;
+    private String arrivalStation;
     private String departureTime;
     private String arrivalTime;
 }

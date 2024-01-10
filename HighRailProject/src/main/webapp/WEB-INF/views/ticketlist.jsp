@@ -49,8 +49,8 @@
                         <td>${ ticket.tran.tranNo }</td>
                         <td>${ ticket.carNo }</td>
                         <td>${ ticket.siteNo }</td>
-                        <td>出發站</td>
-                        <td>到達站</td>
+                        <td>${ ticket.tran.departureStation }</td>
+                        <td>${ ticket.tran.arrivalStation }</td>
                         <td>${ ticket.tran.date }</td>
                         <td>${ ticket.tran.departureTime }</td>
                         <td>${ ticket.tran.arrivalTime }</td>

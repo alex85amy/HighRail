@@ -26,8 +26,10 @@ CREATE TABLE IF NOT EXISTS `project`.`TRAN` (
   `tran_id` INT auto_increment NOT NULL,
   `tran_no` INT NOT NULL,
   `date` VARCHAR(45) NOT NULL,
+  `departurestation` VARCHAR(45) NOT NULL,
+  `arrivalstation` VARCHAR(45) NOT NULL, 
   `departuretime` VARCHAR(45) NOT NULL,
-  `arrivaltime` VARCHAR(45) NOT NULL,  
+  `arrivaltime` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`tran_id`))
 ENGINE = InnoDB;
 
@@ -93,8 +95,8 @@ SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 insert into user(user_Name, user_Password, user_Phone, user_Email) 
 values("aaa", "111", '0987654321', 'aaa@yahoo.com');
 
-insert into tran(tran_No, date, departureTime, arrivalTime) 
-values(2001, "2024-12-31", "16:10", "16:15");
+insert into tran(tran_No, date, departureStation, arrivalStation, departureTime, arrivalTime) 
+values(2001, "2024-12-31", "台北", "板橋","16:10", "16:15");
 
 insert into ticket(user_Id, tran_Id, car_No, site_No, price) 
 values(101, 301, 10, "A", 1500);

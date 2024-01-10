@@ -86,8 +86,8 @@ public class DaoImplMySQL implements Dao {
 
 	@Override
 	public void addTran(Tran tran) {
-		String sql = "insert into tran(tran_No, date, departureTime, arrivalTime) values(?, ?, ?, ?)";
-		jdbcTemplate.update(sql, tran.getTranNo(), tran.getDate(), tran.getDepartureTime(), tran.getArrivalTime());
+		String sql = "insert into tran(tran_No, departureStation, arrivalStation, date, departureTime, arrivalTime) values(?, ?, ?, ?, ?, ?)";
+		jdbcTemplate.update(sql, tran.getTranNo(), tran.getDepartureStation(), tran.getArrivalStation(), tran.getDate(), tran.getDepartureTime(), tran.getArrivalTime());
 	}
 
 	// 為 Ticket 注入 tran
@@ -97,7 +97,7 @@ public class DaoImplMySQL implements Dao {
 		findUserByUserId(ticket.getUserId()).ifPresent(ticket::setUser);
 
 		// 查詢 tran 並注入
-		String sql = "select tran_Id, tran_No, date, departureTime, arrivalTime from tran where tran_Id = ?";
+		String sql = "select tran_Id, tran_No, departureStation, arrivalStation, date, departureTime, arrivalTime from tran where tran_Id = ?";
 		Tran tran = jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<>(Tran.class), ticket.getTranId());
 		ticket.setTran(tran);
 	}
