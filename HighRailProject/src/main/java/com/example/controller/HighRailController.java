@@ -18,8 +18,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.example.dao.DaoImplMySQL;
 import com.example.entity.Ticket;
 import com.example.entity.User;
+import com.example.util.PriceTDXApi;
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
 import com.mchange.v2.cmdline.UnexpectedSwitchArgumentException;
-
 
 /**
  * http://localhost:8080/HighRailProject/mvc/highrail
@@ -30,30 +33,29 @@ public class HighRailController {
 
 	@Autowired
 	private DaoImplMySQL dao;
-	
-	//進入首頁
+
+	// 進入首頁
 	@GetMapping("/main")
 	// http://localhost:8080/HighRailProject/mvc/highrail/main
 	public String main() {
 		return "main";
 	}
 
-	//登入頁面
+	// 登入頁面
 	@GetMapping("/login")
 	public String loginpageString(HttpSession session) {
 		return "login";
 	}
-	
-	//登入
+
+	// 登入
 	@PostMapping("/login")
-	public String login(@RequestParam("username") String username, 
-						@RequestParam("password") String password,
-						HttpSession session,Model model) {
+	public String login(@RequestParam("username") String username, @RequestParam("password") String password,
+			HttpSession session, Model model) {
 		// 根據 username 查找 user 物件
 		Optional<User> userOpt = dao.findUserByUsername(username);
-		if(userOpt.isPresent()) {
+		if (userOpt.isPresent()) {
 			User user = userOpt.get();
-			if(user.getUserPassword().equals(password)) { // 比對加密過後的 password 是否相同
+			if (user.getUserPassword().equals(password)) { // 比對加密過後的 password 是否相同
 				session.setAttribute("user", user); // 將 user 物件放入到 session 變數中
 				return "redirect:/mvc/highrail/main"; // OK, 導向前台首頁
 			} else {
@@ -67,109 +69,114 @@ public class HighRailController {
 			return "login";
 		}
 	}
-	
-	//登出
+
+	// 登出
 	@GetMapping("/logout")
 	public String logout(HttpSession session) {
 		session.invalidate();
 		return "redirect:/mvc/highrail/main";
 	}
-	
-	//註冊頁面
-		@GetMapping("/register")
-		public String registerpageString(@ModelAttribute User user,HttpSession session) {
-			return "register";
-		}
-	
-	//註冊
+
+	// 註冊頁面
+	@GetMapping("/register")
+	public String registerpageString(@ModelAttribute User user, HttpSession session) {
+		return "register";
+	}
+
+	// 註冊
 	@PostMapping("/register")
-	public String register(@ModelAttribute User user, Model model ) {		
+	public String register(@ModelAttribute User user, Model model) {
 		Optional<User> userOpt = dao.findUserByUsername(user.getUserName());
-		if(userOpt.isPresent()) {
+		if (userOpt.isPresent()) {
 			model.addAttribute("registerMessage", "使用者名稱重複");
 			System.out.println("使用者名稱重複");
 			return "register";
-		}else {
-			
-		dao.addUser(user);
-		return "login";
+		} else {
+
+			dao.addUser(user);
+			return "login";
 		}
 	}
-	
-	//時刻表頁面
+
+	// 時刻表頁面
 	@GetMapping("/timetable")
 	public String timeTable() {
-		
+
 		return "timetable";
 	}
-	
-	//查詢時刻表
+
+	// 查詢時刻表
 	@PostMapping("/timetable")
 	public String timeTableCheck(@RequestParam("fromStation") Integer fromStation,
-								@RequestParam("toStation") Integer toStation,
-								@RequestParam("departureDate") String departureDate,Model model) {
-			if(fromStation.equals(toStation)) {
-			
+			@RequestParam("toStation") Integer toStation, @RequestParam("departureDate") String departureDate,
+			Model model) {
+		if (fromStation.equals(toStation)) {
+
 			model.addAttribute("checkingMessage", "起點終點重複");
 			System.out.println("起點終點重複");
 			return "timetable";
-		}else {
+		} else {
 			model.addAttribute("fromStation", fromStation);
 			model.addAttribute("toStation", toStation);
 			model.addAttribute("departureDate", departureDate);
 			return "timetable";
 		}
 	}
-	
-	//訂票頁面
+
+	// 訂票頁面
 	@GetMapping("/booking")
 	public String booking(HttpSession session, Model model) {
-		
+
 		return "booking";
 	}
-		
-	//選票頁面
+
+	// 選票頁面
 	@PostMapping("/booking/choosing")
-	public String choosing(@RequestParam("fromStation") Integer fromStation,
-							@RequestParam("toStation") Integer toStation,
-							@RequestParam("departureDate") String departureDate,
-							@RequestParam("quantity") Integer quantity,Model model){
-		if(fromStation.equals(toStation)) {
-			
+	public String choosing(@RequestParam("fromStation") String fromStation,
+			@RequestParam("toStation") String toStation, @RequestParam("departureDate") String departureDate,
+			@RequestParam("quantity") Integer quantity, Model model) throws Exception {
+
+		if (fromStation.equals(toStation)) {
 			model.addAttribute("bookingMessage", "起點終點重複");
 			return "booking";
-		}else {
-			return "choosing";
-		}
+		} 
 		
+		String fare = PriceTDXApi.getODFare(fromStation, toStation);
+		String price = JsonParser.parseString(fare).getAsJsonArray().get(0)
+				.getAsJsonObject().get("Fares")
+				.getAsJsonArray().get(0)
+				.getAsJsonObject().get("Price")
+				.getAsString();
+		System.out.println(price);
+		
+		return "choosing";
+	
+
 	}
-	
-	//訂票結果
-		@GetMapping("/booking/choosing/result")
-		public String result() {
-			
-			
-			return "redirect:/mvc/highrail/ticketlist";
-		}
-	
-	//取消訂票
+
+	// 訂票結果
+	@GetMapping("/booking/choosing/result")
+	public String result() {
+
+		return "redirect:/mvc/highrail/ticketlist";
+	}
+
+	// 取消訂票
 	@GetMapping("/ticketlist/cancel")
-	public String cancelticket(@RequestParam("ticketId") Integer ticketId,
-								HttpSession session) {
+	public String cancelticket(@RequestParam("ticketId") Integer ticketId, HttpSession session) {
 		dao.removeTicket(ticketId);
 		return "redirect:/mvc/highrail/ticketlist";
 	}
-	
-	//查看票夾
+
+	// 查看票夾
 	@GetMapping("/ticketlist")
 	public String ticketlist(HttpSession session, Model model) {
 		// 1. 先找到 user 登入者
-		User user = (User)session.getAttribute("user");
-		
+		User user = (User) session.getAttribute("user");
+
 		List<Ticket> tickets = dao.findAllTicketsByUserId(user.getUserId());
 		model.addAttribute("tickets", tickets);
 		return "ticketlist";
-		
 
 	}
 }
