@@ -103,6 +103,7 @@ public class HighRailController {
 		return "timetable";
 	}
 	
+	//查詢時刻表
 	@PostMapping("/timetable")
 	public String timeTableCheck(@RequestParam("fromStation") Integer fromStation,
 								@RequestParam("toStation") Integer toStation,
@@ -112,7 +113,10 @@ public class HighRailController {
 			model.addAttribute("bookingMessage", "起點終點重複");
 			return "redirect:/mvc/highrail/timetable";
 		}else {
-			return "choosing";
+			model.addAttribute(model);
+			model.addAttribute(model);
+			model.addAttribute(model);
+			return "timetable";
 		}
 	}
 	
@@ -121,15 +125,8 @@ public class HighRailController {
 	public String booking(HttpSession session, Model model) {
 		
 		return "booking";
-		
-//		if(user != null) {
-//			return "booking";
-//		}else {
-//			return "redirect:/mvc/highrail/login";
-//		}
-		
 	}
-	
+		
 	//選票頁面
 	@PostMapping("/booking/choosing")
 	public String choosing(@RequestParam("fromStation") Integer fromStation,
@@ -146,11 +143,15 @@ public class HighRailController {
 		
 	}
 	
-//	@GetMapping("/booking/choosing/result")
-//	public String result() {
-//		
-//	}
+	//訂票結果
+		@GetMapping("/booking/choosing/result")
+		public String result() {
+			
+			
+			return "redirect:/mvc/highrail/ticketlist";
+		}
 	
+	//取消訂票
 	@GetMapping("/ticketlist/cancel")
 	public String cancelticket(@RequestParam("ticketId") Integer ticketId,
 								HttpSession session) {
@@ -168,12 +169,6 @@ public class HighRailController {
 		model.addAttribute("tickets", tickets);
 		return "ticketlist";
 		
-//		if(user != null) {
-//		List<Ticket> tickets = dao.findAllTicketsByUserId(user.getUserId());
-//		model.addAttribute("tickets", tickets);
-//		 return "ticketlist";
-//		}else {
-//			return "redirect:/mvc/highrail/login";
-//		}
+
 	}
 }

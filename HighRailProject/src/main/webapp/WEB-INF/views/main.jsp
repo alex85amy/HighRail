@@ -7,13 +7,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>高鐵訂票系統</title>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <style type="text/css">
+    body {
+	background-color: black;
+}
+    
+    </style>
   </head>
 
-  <body>
+  <body class="bg.black">
 
     <%@ include file="./header.jsp" %>
-
-      <H2>好看的圖片</H2>
+    
+	
+      <H2 >好看的圖片</H2>
+      <img alt="" class="img-fluid" src=".HighRail/HighRailProject/src/main/webapp/WEB-INF/img/高鐵-01.png">
+    
 
      <%@ include file="./footer.jsp" %>
 
