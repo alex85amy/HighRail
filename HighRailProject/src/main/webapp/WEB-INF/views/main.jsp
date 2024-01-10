@@ -20,8 +20,8 @@
     <%@ include file="./header.jsp" %>
     
 	
-      <H2 >好看的圖片</H2>
-      <img alt="" class="img-fluid" src=".HighRail/HighRailProject/src/main/webapp/WEB-INF/img/高鐵-01.png">
+     
+      <img alt="" class="img-fluid" src="../../img/高鐵-01.png">
     
 
      <%@ include file="./footer.jsp" %>
