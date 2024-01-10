@@ -38,11 +38,11 @@
                 </li>
             </ul>
             <ul class="navbar-nav ml-auto mb-2 mb-lg-0">
-				<c:if test="${ empty user }">
+				<c:if test="${ empty sessionScope.user }">
                  <a class="btn btn-outline-success fs-3 text-black submit" href="<%= request.getContextPath() %>/mvc/highrail/login">登入</a>
                 </c:if>
-                
-                <c:if test="${ not empty user }">
+
+                <c:if test="${ not empty sessionScope.user }">
                  <p class="text-black me-3 mb-0">Welcome, ${ user.userName } ! 
                  <a href="${ pageContext.request.contextPath }/mvc/highrail/logout" class="btn btn-outline-danger">Logout</a></p>
                 </c:if> 

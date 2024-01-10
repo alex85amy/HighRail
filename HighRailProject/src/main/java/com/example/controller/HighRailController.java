@@ -113,9 +113,9 @@ public class HighRailController {
 			model.addAttribute("bookingMessage", "起點終點重複");
 			return "redirect:/mvc/highrail/timetable";
 		}else {
-			model.addAttribute(model);
-			model.addAttribute(model);
-			model.addAttribute(model);
+			model.addAttribute("fromStation", fromStation);
+			model.addAttribute("toStation", toStation);
+			model.addAttribute("departureDate", departureDate);
 			return "timetable";
 		}
 	}
