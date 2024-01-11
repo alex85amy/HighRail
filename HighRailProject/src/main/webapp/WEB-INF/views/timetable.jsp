@@ -70,6 +70,7 @@
             <table class="table table-dark table-hover">
                 <thead>
                     <tr>
+                        <th scope="col">車號</th>
                         <th scope="col">出發站</th>
                         <th scope="col">到達站</th>
                         <th scope="col">出發日期</th>
@@ -78,14 +79,16 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>台北</td>
-                        <td>台中</td>
-                        <td>2023-12-31</td>
-                        <td>06:15</td>
-                        <td>06:33</td>
+                <c:forEach items="" var=""> 
+                    <tr>                    
+                        <td>${ tranNumber }</td>
+                        <td>${ fromStation }</td>
+                        <td>${ toStation }</td>
+                        <td>${ departureDate }</td>
+                        <td>${ departureTime }</td>
+                        <td>${ arrivalTime }</td>
                     </tr>
-
+				</c:forEach>
                 </tbody>
             </table>
         </div>

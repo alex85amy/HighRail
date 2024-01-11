@@ -128,9 +128,17 @@ public class HighRailController {
 					.getAsJsonObject().get("DestinationStopTime")
 					.getAsJsonObject().get("ArrivalTime")
 					.getAsString();
+			String tranNumber = JsonParser.parseString(timeTable).getAsJsonArray().get(0)
+					.getAsJsonObject().get("DailyTrainInfo")
+					.getAsJsonObject().get("TrainNo")
+					.getAsString();
 			
+			model.addAttribute("fromStation", fromStation);
+			model.addAttribute("toStation", toStation);
+			model.addAttribute("departureDate", departureDate);
 			model.addAttribute("departureTime", departureTime);
 			model.addAttribute("arrivalTime", arrivalTime);
+			model.addAttribute("tranNumber", tranNumber);
 			
 			
 			System.out.println(arrivalTime);
@@ -156,6 +164,10 @@ public class HighRailController {
 			model.addAttribute("bookingMessage", "起點終點重複");
 			return "booking";
 		} 
+		model.addAttribute("fromStation", fromStation);
+		model.addAttribute("toStation", toStation);
+		model.addAttribute("departureDate", departureDate);
+		
 		
 		String fare = PriceTDXApi.getODFare(fromStation, toStation);
 		String timeTable = TimeTDXApi.getTimeTable(fromStation, toStation, departureDate);
