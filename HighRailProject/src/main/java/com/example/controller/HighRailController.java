@@ -19,6 +19,7 @@ import com.example.dao.DaoImplMySQL;
 import com.example.entity.Ticket;
 import com.example.entity.User;
 import com.example.util.PriceTDXApi;
+import com.example.util.TimeTDXApi;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
@@ -91,11 +92,11 @@ public class HighRailController {
 			model.addAttribute("registerMessage", "使用者名稱重複");
 			System.out.println("使用者名稱重複");
 			return "register";
-		} else {
+		} 
 
 			dao.addUser(user);
 			return "login";
-		}
+		
 	}
 
 	// 時刻表頁面
@@ -107,20 +108,34 @@ public class HighRailController {
 
 	// 查詢時刻表
 	@PostMapping("/timetable")
-	public String timeTableCheck(@RequestParam("fromStation") Integer fromStation,
-			@RequestParam("toStation") Integer toStation, @RequestParam("departureDate") String departureDate,
-			Model model) {
+	public String timeTableCheck(@RequestParam("fromStation") String fromStation,
+			@RequestParam("toStation") String toStation, @RequestParam("departureDate") String departureDate,
+			Model model)  throws Exception {
+
 		if (fromStation.equals(toStation)) {
 
 			model.addAttribute("checkingMessage", "起點終點重複");
 			System.out.println("起點終點重複");
 			return "timetable";
-		} else {
-			model.addAttribute("fromStation", fromStation);
-			model.addAttribute("toStation", toStation);
-			model.addAttribute("departureDate", departureDate);
+		} 
+			String timeTable = TimeTDXApi.getTimeTable(fromStation, toStation, departureDate);
+			String departureTime = JsonParser.parseString(timeTable).getAsJsonArray().get(0)
+					.getAsJsonObject().get("OriginStopTime")
+					.getAsJsonObject().get("DepartureTime")
+					.getAsString();
+			String arrivalTime = JsonParser.parseString(timeTable).getAsJsonArray().get(0)
+					.getAsJsonObject().get("DestinationStopTime")
+					.getAsJsonObject().get("ArrivalTime")
+					.getAsString();
+			
+			model.addAttribute("departureTime", departureTime);
+			model.addAttribute("arrivalTime", arrivalTime);
+			
+			
+			System.out.println(arrivalTime);
+			
 			return "timetable";
-		}
+		
 	}
 
 	// 訂票頁面
@@ -142,11 +157,24 @@ public class HighRailController {
 		} 
 		
 		String fare = PriceTDXApi.getODFare(fromStation, toStation);
+		String timeTable = TimeTDXApi.getTimeTable(fromStation, toStation, departureDate);
+		
+		String departureTime = JsonParser.parseString(timeTable).getAsJsonArray().get(0)
+				.getAsJsonObject().get("OriginStopTime")
+				.getAsJsonObject().get("DepartureTime")
+				.getAsString();
+		
+		String arrivalTime = JsonParser.parseString(timeTable).getAsJsonArray().get(0)
+				.getAsJsonObject().get("DestinationStopTime")
+				.getAsJsonObject().get("ArrivalTime")
+				.getAsString();
+		
 		String price = JsonParser.parseString(fare).getAsJsonArray().get(0)
 				.getAsJsonObject().get("Fares")
 				.getAsJsonArray().get(0)
 				.getAsJsonObject().get("Price")
 				.getAsString();
+		
 		System.out.println(price);
 		
 		return "choosing";

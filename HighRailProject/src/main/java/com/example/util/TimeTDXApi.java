@@ -46,6 +46,29 @@ public class TimeTDXApi {
 		String resultJson = getJsonString(tdxUrl, headers);
 		System.out.println(resultJson);
 	}
+	
+	public static String getTimeTable(String fromStation, String toStation, String departureDate) throws Exception {
+		String tokenUrl = "https://tdx.transportdata.tw/auth/realms/TDXConnect/protocol/openid-connect/token";
+		String tdxUrl = String.format(
+				"https://tdx.transportdata.tw/api/basic/v2/Rail/THSR/DailyTimetable/OD/%s/to/%s/%s", 
+				fromStation,
+				toStation,
+				departureDate);
+        List<NameValuePair> params = new ArrayList<>();
+        Map<String,String> headers = new HashMap<>();
+        params.add(new BasicNameValuePair("grant_type", "client_credentials"));
+        params.add(new BasicNameValuePair("client_id", "alex85amy-518c2d78-70b9-4801")); //your clientId
+        params.add(new BasicNameValuePair("client_secret", "02dc5d1a-8876-4c89-9de5-7269efa87c25")); //your clientSecret
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        String tokenInfo = postJsonString(tokenUrl, params);
+        JsonNode tokenElem = objectMapper.readTree(tokenInfo);
+        
+		String accessToken = tokenElem.get("access_token").asText();
+		headers.put("authorization", String.format("Bearer %s", accessToken));
+		
+		return getJsonString(tdxUrl, headers);
+	}
 
 	private static String getJsonString(String tdxUrl, Map<String, String> headers) throws Exception {
 		HttpGet httpGet = new HttpGet(tdxUrl);
