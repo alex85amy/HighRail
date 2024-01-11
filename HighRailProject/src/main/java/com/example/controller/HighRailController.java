@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.dao.DaoImplMySQL;
 import com.example.entity.Ticket;
+import com.example.entity.Tran;
 import com.example.entity.User;
 import com.example.util.PriceTDXApi;
 import com.example.util.TimeTDXApi;
@@ -141,7 +142,7 @@ public class HighRailController {
 	// 訂票頁面
 	@GetMapping("/booking")
 	public String booking(HttpSession session, Model model) {
-
+		
 		return "booking";
 	}
 
@@ -184,8 +185,15 @@ public class HighRailController {
 
 	// 訂票結果
 	@GetMapping("/booking/choosing/result")
-	public String result() {
-
+	public String result(@ModelAttribute Tran tran, 
+						Model model, HttpSession session) {
+		User user = (User)session.getAttribute("user");
+		dao.addTran(tran);
+		Ticket ticket = new Ticket();
+		ticket.setUser(user);
+		ticket.setTran(tran);
+		dao.addTicket(ticket);
+		
 		return "redirect:/mvc/highrail/ticketlist";
 	}
 
