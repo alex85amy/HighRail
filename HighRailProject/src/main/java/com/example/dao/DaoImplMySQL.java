@@ -49,9 +49,9 @@ public class DaoImplMySQL implements Dao {
 
 	@Override
 	public void addTicket(Ticket ticket) {
-		String sql = "insert into ticket(user_Id, tran_Id, car_No, site_No, price, state) values(?, ?, ?, ?, ?, ?)";
+		String sql = "insert into ticket(user_Id, tran_Id, car_No, site_No, price) values(?, ?, ?, ?, ?)";
 		jdbcTemplate.update(sql, ticket.getUserId(), ticket.getTranId(), ticket.getCarNo(), ticket.getSiteNo(),
-				ticket.getPrice(), ticket.getState());
+								 ticket.getPrice());
 
 	}
 

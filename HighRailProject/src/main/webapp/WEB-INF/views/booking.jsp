@@ -74,7 +74,7 @@
 
         </div> -->
 
-        <button type="submit" class="btn btn-primary">確認</button>
+        <button type="submit" class="btn btn-primary mt-2">確認</button>
     </form>
 </div>
 

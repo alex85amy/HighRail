@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -79,16 +81,16 @@
                     </tr>
                 </thead>
                 <tbody>
-                <c:forEach items="" var=""> 
+               
                     <tr>                    
                         <td>${ tranNumber }</td>
-                        <td>${ fromStation }</td>
-                        <td>${ toStation }</td>
+                        <td>${ startingStationName }</td>
+                        <td>${ endingStationName }</td>
                         <td>${ departureDate }</td>
                         <td>${ departureTime }</td>
                         <td>${ arrivalTime }</td>
                     </tr>
-				</c:forEach>
+			
                 </tbody>
             </table>
         </div>

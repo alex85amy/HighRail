@@ -2,6 +2,7 @@ package com.example.controller;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 
 import javax.servlet.http.HttpSession;
 
@@ -120,6 +121,16 @@ public class HighRailController {
 			return "timetable";
 		} 
 			String timeTable = TimeTDXApi.getTimeTable(fromStation, toStation, departureDate);
+			String startingStationName = JsonParser.parseString(timeTable).getAsJsonArray().get(0)
+					.getAsJsonObject().get("OriginStopTime")
+					.getAsJsonObject().get("StationName")
+					.getAsJsonObject().get("Zh_tw")
+					.getAsString();
+			String endingStationName = JsonParser.parseString(timeTable).getAsJsonArray().get(0)
+					.getAsJsonObject().get("DestinationStopTime")
+					.getAsJsonObject().get("StationName")
+					.getAsJsonObject().get("Zh_tw")
+					.getAsString();
 			String departureTime = JsonParser.parseString(timeTable).getAsJsonArray().get(0)
 					.getAsJsonObject().get("OriginStopTime")
 					.getAsJsonObject().get("DepartureTime")
@@ -133,15 +144,15 @@ public class HighRailController {
 					.getAsJsonObject().get("TrainNo")
 					.getAsString();
 			
-			model.addAttribute("fromStation", fromStation);
-			model.addAttribute("toStation", toStation);
+			model.addAttribute("startingStationName", startingStationName);
+			model.addAttribute("endingStationName", endingStationName);
 			model.addAttribute("departureDate", departureDate);
 			model.addAttribute("departureTime", departureTime);
 			model.addAttribute("arrivalTime", arrivalTime);
 			model.addAttribute("tranNumber", tranNumber);
 			
 			
-			System.out.println(arrivalTime);
+			System.out.println(startingStationName);
 			
 			return "timetable";
 		
@@ -196,14 +207,34 @@ public class HighRailController {
 	}
 
 	// 訂票結果
-	@GetMapping("/booking/choosing/result")
-	public String result(@ModelAttribute Tran tran, 
+	@PostMapping("/booking/choosing/result")
+	public String result(@ModelAttribute Tran tran,
+						@RequestParam("price") Integer price,
 						Model model, HttpSession session) {
+		
 		User user = (User)session.getAttribute("user");
+		
 		dao.addTran(tran);
+		
+		
 		Ticket ticket = new Ticket();
-		ticket.setUser(user);
-		ticket.setTran(tran);
+		
+		ticket.setUserId(user.getUserId());
+		
+		ticket.setTranId(tran.getTranId());
+		
+		int i;
+		i = (int) (Math.random()*10)+1;
+		Integer iInteger = Integer.valueOf(i);
+		ticket.setCarNo(iInteger);
+		
+		Random r = new Random();
+		char c = (char)(r.nextInt(5) + 'a');
+		String s = Character.toString(c);
+		ticket.setSiteNo(s);
+		
+		ticket.setPrice(price);
+		
 		dao.addTicket(ticket);
 		
 		return "redirect:/mvc/highrail/ticketlist";

@@ -15,4 +15,5 @@ public class Tran {
     private String arrivalStation;
     private String departureTime;
     private String arrivalTime;
+    
 }

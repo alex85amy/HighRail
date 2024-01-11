@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="sp" uri="http://www.springframework.org/tags/form" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -19,6 +20,7 @@
 
     <div class="container mt-5">
         <div class="table-responsive">
+        <sp:form modelAttribute="user" method="post" action="/HighRailProject/mvc/highrail/booking/choosing/result">
             <table class="table table-dark table-hover">
                 <thead>
                     <tr>
@@ -42,16 +44,15 @@
                         <td>2023-12-25</td>
                         <td>06:15</td>
                         <td>06:33</td>
-                        <td>2</td>
-                        <td>1500</td>
+                        <td>1</td>
+                        <td id="price">1000</td>
                         <td>
-                            <button onClick="">訂票</button>
+                         <button type="submit" class="btn btn-primary mt-2">訂票</button>
                         </td>
                     </tr>
-                   
-
                 </tbody>
             </table>
+            </sp:form>
         </div>
     </div>
 
