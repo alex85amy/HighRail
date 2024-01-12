@@ -20,7 +20,6 @@
 
     <div class="container mt-5">
         <div class="table-responsive">
-        <sp:form modelAttribute="user" method="post" action="/HighRailProject/mvc/highrail/booking/choosing/result">
             <table class="table table-dark table-hover">
                 <thead>
                     <tr>
@@ -35,9 +34,10 @@
                     </tr>
                 </thead>
                 <tbody>
+                	
                 	<c:forEach items="${ trainTimes }" var="trainTime">
                     <tr>
-                        <th scope="row" class="cell">${ trainTime.tranNo }</th>
+                        <th scope="row" class="cell" id="tranNo">${ trainTime.tranNo }</th>
                         <td class="cell">${ trainTime.startingStationName }</td>
                         <td class="cell">${ trainTime.endingStationName }</td>
                         <td class="cell">${ trainTime.departureDate }</td>
@@ -45,23 +45,23 @@
                         <td class="cell">${ trainTime.arrivalTime }</td>
                         <td class="cell">${ price }</td>
                         <td>
-                         <button id="sendDataBtn" class="btn btn-primary mt-2">訂票</button>
+                         <button class="btn btn-primary mt-2" type="" >訂票</button>
                         </td>
                     </tr>
                     </c:forEach>
                 </tbody>
             </table>
-            </sp:form>
+         
         </div>
     </div>
 
 
 <%@ include file="./footer.jsp" %>
-
+<!--  
 <script>
   $(document).ready(function() {
     // 點擊按鈕時觸發
-    $("#sendDataBtn").click(function() {
+    $(".sendDataBtn").click(function() {
       let cellData = {};
 
       // 遍歷每個包含 'cell' 類的 td 元素，並獲取其文本內容
@@ -81,12 +81,13 @@
         },
         error: function(error) {
           console.error('Error sending data:', error);
+          
         }
       });
     });
   });
 </script>
-
+-->
 </body>
 
 </html>

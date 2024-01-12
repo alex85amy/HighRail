@@ -21,6 +21,5 @@ public class TrainTime {
 	
 	private String arrivalTime;
 	
-	private String price;
 
 }

@@ -1,6 +1,7 @@
 package com.example.controller;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Random;
 
@@ -167,38 +168,40 @@ public class HighRailController {
 
 	// 訂票結果
 	@PostMapping("/booking/choosing/result")
-	public String result(@ModelAttribute Tran tran,
-						//@RequestBody Map<String, String> cellData
-						@RequestParam("price") Integer price,
+	public String result(@RequestParam("tranNo") String tranNo,
+						//@RequestBody Map<String, String> cellData,
 						Model model, HttpSession session) {
 		
 		User user = (User)session.getAttribute("user");
 		
-//		String value1 = cellData.get("value1");
-//	    String value2 = cellData.get("value2");
-	    
-		dao.addTran(tran);
-		
-		
-		Ticket ticket = new Ticket();
-		
-		ticket.setUserId(user.getUserId());
-		
-		ticket.setTranId(tran.getTranId());
-		
-		int i;
-		i = (int) (Math.random()*10)+1;
-		Integer iInteger = Integer.valueOf(i);
-		ticket.setCarNo(iInteger);
-		
-		Random r = new Random();
-		char c = (char)(r.nextInt(5) + 'a');
-		String s = Character.toString(c);
-		ticket.setSiteNo(s);
-		
-		ticket.setPrice(price);
-		
-		dao.addTicket(ticket);
+		 System.out.println("Received data from frontend: " + tranNo);
+//	String tranNo = cellData.get("value1");
+//    String value2 = cellData.get("value2");
+//    
+//    System.out.println(tranNo);
+//	    
+//    
+//    	Tran tran = new Tran();
+//    	
+//		dao.addTran(tran);
+//		
+//		
+//		Ticket ticket = new Ticket();
+//		
+//		ticket.setUserId(user.getUserId());
+//		
+//		ticket.setTranId(tran.getTranId());
+//		
+//		int i;
+//		i = (int) (Math.random()*10)+1;
+//		Integer iInteger = Integer.valueOf(i);
+//		ticket.setCarNo(iInteger);
+//		
+//		Random r = new Random();
+//		char c = (char)(r.nextInt(5) + 'a');
+//		String s = Character.toString(c);
+//		ticket.setSiteNo(s);
+//		dao.addTicket(ticket);
 		
 		return "redirect:/mvc/highrail/ticketlist";
 	}
