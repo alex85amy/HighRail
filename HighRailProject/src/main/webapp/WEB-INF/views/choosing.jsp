@@ -30,26 +30,25 @@
                         <th scope="col">出發日期</th>
                         <th scope="col">出發時間</th>
                         <th scope="col">到達時間</th>
-                        <th scope="col">張數</th>
                         <th scope="col">價錢</th>
                         <th scope="col">訂票</th>
                     </tr>
                 </thead>
                 <tbody>
-                
+                	<c:forEach items="${ trainTimes }" var="trainTime">
                     <tr>
-                        <th scope="row">103</th>
-                        <td>台北</td>
-                        <td>台中</td>
-                        <td>2023-12-25</td>
-                        <td>06:15</td>
-                        <td>06:33</td>
-                        <td>1</td>
-                        <td id="price">1000</td>
+                        <th scope="row" class="cell">${ trainTime.tranNo }</th>
+                        <td class="cell">${ trainTime.startingStationName }</td>
+                        <td class="cell">${ trainTime.endingStationName }</td>
+                        <td class="cell">${ trainTime.departureDate }</td>
+                        <td class="cell">${ trainTime.departureTime }</td>
+                        <td class="cell">${ trainTime.arrivalTime }</td>
+                        <td class="cell">${ price }</td>
                         <td>
-                         <button type="submit" class="btn btn-primary mt-2">訂票</button>
+                         <button id="sendDataBtn" class="btn btn-primary mt-2">訂票</button>
                         </td>
                     </tr>
+                    </c:forEach>
                 </tbody>
             </table>
             </sp:form>
@@ -58,6 +57,35 @@
 
 
 <%@ include file="./footer.jsp" %>
+
+<script>
+  $(document).ready(function() {
+    // 點擊按鈕時觸發
+    $("#sendDataBtn").click(function() {
+      let cellData = {};
+
+      // 遍歷每個包含 'cell' 類的 td 元素，並獲取其文本內容
+      $(".cell").each(function(index) {
+        cellData["value" + (index + 1)] = $(this).text();
+      });
+
+      // 使用 jQuery 的 AJAX 方法發送數據到後端
+      $.ajax({
+        url: '/HighRailProject/mvc/highrail/booking/choosing/result',
+        type: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify(cellData),
+        success: function(response) {
+          console.log('Data sent successfully:', response);
+          // 可以在此處添加其他處理或回應
+        },
+        error: function(error) {
+          console.error('Error sending data:', error);
+        }
+      });
+    });
+  });
+</script>
 
 </body>
 

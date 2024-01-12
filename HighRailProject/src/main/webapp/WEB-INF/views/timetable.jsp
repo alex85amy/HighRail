@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="sp" uri="http://www.springframework.org/tags/form" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -80,18 +81,18 @@
                         <th scope="col">到達時間</th>
                     </tr>
                 </thead>
-                <tbody>
-               
-                    <tr>                    
-                        <td>${ tranNumber }</td>
-                        <td>${ startingStationName }</td>
-                        <td>${ endingStationName }</td>
-                        <td>${ departureDate }</td>
-                        <td>${ departureTime }</td>
-                        <td>${ arrivalTime }</td>
-                    </tr>
-			
-                </tbody>
+	                <tbody>
+	                	<c:forEach items="${ trainTimes }" var="trainTime">
+	                		<tr>
+		                		<td>${ trainTime.tranNo }</td>
+		                		<td>${ trainTime.startingStationName }</td>
+		                		<td>${ trainTime.endingStationName }</td>
+		                		<td>${ trainTime.departureDate }</td>
+		                		<td>${ trainTime.departureTime }</td>
+		                		<td>${ trainTime.arrivalTime }</td>
+	                		</tr>
+	                	</c:forEach>
+	                </tbody>
             </table>
         </div>
     </div>

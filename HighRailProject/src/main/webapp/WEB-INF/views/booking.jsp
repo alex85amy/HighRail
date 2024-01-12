@@ -59,14 +59,14 @@
             <input type="date" class="form-control" id="departureDate" name="departureDate" required>
         </div>
 
-        <div class="form-group">
+        <!-- <div class="form-group">
             <label for="quantity">張數</label>
             <select class="form-control" id="quantity" name="quantity">
                 <option>1</option>
                 <option>2</option>
-                
+               
             </select>
-        </div>
+        </div> -->
 
         <!-- <div>
             <label>價錢</label>

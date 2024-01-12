@@ -12,16 +12,19 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.example.bean.TrainTime;
 import com.example.dao.DaoImplMySQL;
 import com.example.entity.Ticket;
 import com.example.entity.Tran;
 import com.example.entity.User;
 import com.example.util.PriceTDXApi;
 import com.example.util.TimeTDXApi;
+import com.example.util.TimeTableAPI;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
@@ -120,42 +123,10 @@ public class HighRailController {
 			System.out.println("起點終點重複");
 			return "timetable";
 		} 
-			String timeTable = TimeTDXApi.getTimeTable(fromStation, toStation, departureDate);
-			String startingStationName = JsonParser.parseString(timeTable).getAsJsonArray().get(0)
-					.getAsJsonObject().get("OriginStopTime")
-					.getAsJsonObject().get("StationName")
-					.getAsJsonObject().get("Zh_tw")
-					.getAsString();
-			String endingStationName = JsonParser.parseString(timeTable).getAsJsonArray().get(0)
-					.getAsJsonObject().get("DestinationStopTime")
-					.getAsJsonObject().get("StationName")
-					.getAsJsonObject().get("Zh_tw")
-					.getAsString();
-			String departureTime = JsonParser.parseString(timeTable).getAsJsonArray().get(0)
-					.getAsJsonObject().get("OriginStopTime")
-					.getAsJsonObject().get("DepartureTime")
-					.getAsString();
-			String arrivalTime = JsonParser.parseString(timeTable).getAsJsonArray().get(0)
-					.getAsJsonObject().get("DestinationStopTime")
-					.getAsJsonObject().get("ArrivalTime")
-					.getAsString();
-			String tranNumber = JsonParser.parseString(timeTable).getAsJsonArray().get(0)
-					.getAsJsonObject().get("DailyTrainInfo")
-					.getAsJsonObject().get("TrainNo")
-					.getAsString();
-			
-			model.addAttribute("startingStationName", startingStationName);
-			model.addAttribute("endingStationName", endingStationName);
-			model.addAttribute("departureDate", departureDate);
-			model.addAttribute("departureTime", departureTime);
-			model.addAttribute("arrivalTime", arrivalTime);
-			model.addAttribute("tranNumber", tranNumber);
-			
-			
-			System.out.println(startingStationName);
-			
-			return "timetable";
 		
+		List<TrainTime> trainTimes = TimeTableAPI.getTrainTimes(fromStation, toStation, departureDate);
+		model.addAttribute("trainTimes", trainTimes);
+		return "timetable";
 	}
 
 	// 訂票頁面
@@ -169,37 +140,25 @@ public class HighRailController {
 	@PostMapping("/booking/choosing")
 	public String choosing(@RequestParam("fromStation") String fromStation,
 			@RequestParam("toStation") String toStation, @RequestParam("departureDate") String departureDate,
-			@RequestParam("quantity") Integer quantity, Model model) throws Exception {
+			//@RequestParam("quantity") Integer quantity, 
+			Model model) throws Exception {
 
 		if (fromStation.equals(toStation)) {
 			model.addAttribute("bookingMessage", "起點終點重複");
 			return "booking";
-		} 
-		model.addAttribute("fromStation", fromStation);
-		model.addAttribute("toStation", toStation);
-		model.addAttribute("departureDate", departureDate);
-		
+		} 	
 		
 		String fare = PriceTDXApi.getODFare(fromStation, toStation);
-		String timeTable = TimeTDXApi.getTimeTable(fromStation, toStation, departureDate);
-		
-		String departureTime = JsonParser.parseString(timeTable).getAsJsonArray().get(0)
-				.getAsJsonObject().get("OriginStopTime")
-				.getAsJsonObject().get("DepartureTime")
-				.getAsString();
-		
-		String arrivalTime = JsonParser.parseString(timeTable).getAsJsonArray().get(0)
-				.getAsJsonObject().get("DestinationStopTime")
-				.getAsJsonObject().get("ArrivalTime")
-				.getAsString();
-		
 		String price = JsonParser.parseString(fare).getAsJsonArray().get(0)
 				.getAsJsonObject().get("Fares")
-				.getAsJsonArray().get(0)
+				.getAsJsonArray().get(3)
 				.getAsJsonObject().get("Price")
 				.getAsString();
-		
-		System.out.println(price);
+
+		List<TrainTime> trainTimes = TimeTableAPI.getTrainTimes(fromStation, toStation, departureDate);
+		model.addAttribute("trainTimes", trainTimes);
+		model.addAttribute("price", price);
+			
 		
 		return "choosing";
 	
@@ -209,11 +168,15 @@ public class HighRailController {
 	// 訂票結果
 	@PostMapping("/booking/choosing/result")
 	public String result(@ModelAttribute Tran tran,
+						//@RequestBody Map<String, String> cellData
 						@RequestParam("price") Integer price,
 						Model model, HttpSession session) {
 		
 		User user = (User)session.getAttribute("user");
 		
+//		String value1 = cellData.get("value1");
+//	    String value2 = cellData.get("value2");
+	    
 		dao.addTran(tran);
 		
 		

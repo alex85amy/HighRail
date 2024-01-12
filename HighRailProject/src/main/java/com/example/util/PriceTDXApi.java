@@ -60,7 +60,7 @@ public class PriceTDXApi {
 		
 		String price = JsonParser.parseString(fare).getAsJsonArray().get(0)
 				.getAsJsonObject().get("Fares")
-				.getAsJsonArray().get(0)
+				.getAsJsonArray().get(5)
 				.getAsJsonObject().get("Price")
 				.getAsString();
 
