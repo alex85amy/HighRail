@@ -43,10 +43,12 @@
                         <td class="cell">${ trainTime.departureDate }</td>
                         <td class="cell">${ trainTime.departureTime }</td>
                         <td class="cell">${ trainTime.arrivalTime }</td>
-                        <td class="cell">${ price }</td>
+                        <td class="cell">${ trainTime.price }</td>
                         <td>
-                         <button class="btn btn-primary mt-2" type="" >訂票</button>
-                        </td>
+							<button class="btn btn-primary" onclick="sendData('${trainTime}')" id="">
+								訂票
+							</button>
+						</td>
                     </tr>
                     </c:forEach>
                 </tbody>
@@ -57,37 +59,40 @@
 
 
 <%@ include file="./footer.jsp" %>
-<!--  
+
 <script>
-  $(document).ready(function() {
-    // 點擊按鈕時觸發
-    $(".sendDataBtn").click(function() {
-      let cellData = {};
+    function choosing(tran) {
+        console.log('tran = ', tran);
+        
+    }
+    
+  
+   function sendData(tran) {
+        // 准备要发送的数据
+        var data = {
+        	tran: tran
+        };
 
-      // 遍歷每個包含 'cell' 類的 td 元素，並獲取其文本內容
-      $(".cell").each(function(index) {
-        cellData["value" + (index + 1)] = $(this).text();
-      });
-
-      // 使用 jQuery 的 AJAX 方法發送數據到後端
-      $.ajax({
-        url: '/HighRailProject/mvc/highrail/booking/choosing/result',
-        type: 'POST',
-        contentType: 'application/json',
-        data: JSON.stringify(cellData),
-        success: function(response) {
-          console.log('Data sent successfully:', response);
-          // 可以在此處添加其他處理或回應
-        },
-        error: function(error) {
-          console.error('Error sending data:', error);
-          
-        }
-      });
-    });
-  });
+        // 使用 jQuery 的 $.ajax 函数发送 POST 请求
+        $.ajax({
+            url: '/HighRailProject/mvc/highrail/booking/choosing/result',
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify(data),
+            success: function(response) {
+                // 请求成功的逻辑
+                console.log('请求成功:', response);
+            },
+            error: function(error) {
+                // 请求失败的逻辑
+                console.error('请求失败:', error);
+            }
+        });
+    }
+ 
+   
 </script>
--->
+
 </body>
 
 </html>

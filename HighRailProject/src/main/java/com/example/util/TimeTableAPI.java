@@ -20,6 +20,13 @@ public class TimeTableAPI {
 	
 	public static List<TrainTime> getTrainTimes(String fromStation, String toStation,String departureDate) throws Exception {
 		String timeTable = TimeTableAPI.timeTable(fromStation, toStation, departureDate);
+		String fare = PriceTDXApi.getODFare(fromStation, toStation);
+		String price = JsonParser.parseString(fare).getAsJsonArray().get(0)
+				.getAsJsonObject().get("Fares")
+				.getAsJsonArray().get(3)
+				.getAsJsonObject().get("Price")
+				.getAsString();
+		
 		List<TrainTime> trainTimes = new ArrayList<>();
 		String startingStationName = startingStationName(timeTable);
 		String endingStationName = endingStationName(timeTable);	
@@ -42,6 +49,7 @@ public class TimeTableAPI {
 	         trainTime.setDepartureTime(departureTime);
 	         trainTime.setArrivalTime(arrivalTime);
 	         trainTime.setDepartureDate(departureDate);
+	         trainTime.setPrice(price);
 			 trainTimes.add(trainTime);
 		 }
 		 return trainTimes;

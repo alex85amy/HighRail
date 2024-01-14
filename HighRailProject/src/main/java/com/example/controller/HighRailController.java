@@ -149,16 +149,17 @@ public class HighRailController {
 			return "booking";
 		} 	
 		
-		String fare = PriceTDXApi.getODFare(fromStation, toStation);
-		String price = JsonParser.parseString(fare).getAsJsonArray().get(0)
-				.getAsJsonObject().get("Fares")
-				.getAsJsonArray().get(3)
-				.getAsJsonObject().get("Price")
-				.getAsString();
+//		String fare = PriceTDXApi.getODFare(fromStation, toStation);
+//		String price = JsonParser.parseString(fare).getAsJsonArray().get(0)
+//				.getAsJsonObject().get("Fares")
+//				.getAsJsonArray().get(3)
+//				.getAsJsonObject().get("Price")
+//				.getAsString();
 
 		List<TrainTime> trainTimes = TimeTableAPI.getTrainTimes(fromStation, toStation, departureDate);
+		
 		model.addAttribute("trainTimes", trainTimes);
-		model.addAttribute("price", price);
+//		model.addAttribute("price", price);
 			
 		
 		return "choosing";
@@ -168,40 +169,51 @@ public class HighRailController {
 
 	// 訂票結果
 	@PostMapping("/booking/choosing/result")
-	public String result(@RequestParam("tranNo") String tranNo,
-						//@RequestBody Map<String, String> cellData,
+	public String result(@RequestBody TrainTime trainTime,
 						Model model, HttpSession session) {
 		
 		User user = (User)session.getAttribute("user");
+
+        String tranNo = trainTime.getTranNo();
+        String startingStationName = trainTime.getStartingStationName();
+        String endingStationName = trainTime.getEndingStationName();
+        String departureDate = trainTime.getDepartureDate();
+        String departureTime = trainTime.getDepartureTime();
+        String arrivalTime = trainTime.getArrivalTime();
+        String price = trainTime.getPrice();
+        
+        System.out.println(tranNo);
 		
-		 System.out.println("Received data from frontend: " + tranNo);
-//	String tranNo = cellData.get("value1");
-//    String value2 = cellData.get("value2");
-//    
-//    System.out.println(tranNo);
-//	    
-//    
-//    	Tran tran = new Tran();
-//    	
-//		dao.addTran(tran);
-//		
-//		
-//		Ticket ticket = new Ticket();
-//		
-//		ticket.setUserId(user.getUserId());
-//		
-//		ticket.setTranId(tran.getTranId());
-//		
-//		int i;
-//		i = (int) (Math.random()*10)+1;
-//		Integer iInteger = Integer.valueOf(i);
-//		ticket.setCarNo(iInteger);
-//		
-//		Random r = new Random();
-//		char c = (char)(r.nextInt(5) + 'a');
-//		String s = Character.toString(c);
-//		ticket.setSiteNo(s);
-//		dao.addTicket(ticket);
+     	Tran tran = new Tran();
+     	tran.setTranNo(Integer.parseInt(tranNo));
+     	tran.setDepartureStation(startingStationName);
+     	tran.setArrivalStation(endingStationName);
+     	tran.setDate(departureDate);
+     	tran.setDepartureTime(departureTime);
+     	tran.setArrivalTime(arrivalTime);
+     	
+    	
+		dao.addTran(tran);
+		
+		
+		Ticket ticket = new Ticket();
+		
+		ticket.setUserId(user.getUserId());
+		
+		ticket.setTranId(tran.getTranId());
+		
+		int i;
+		i = (int) (Math.random()*10)+1;
+		Integer iInteger = Integer.valueOf(i);
+		ticket.setCarNo(iInteger);
+		
+		Random r = new Random();
+		char c = (char)(r.nextInt(5) + 'a');
+		String s = Character.toString(c);
+		ticket.setSiteNo(s);
+		ticket.setPrice(Integer.parseInt(price));
+		
+		dao.addTicket(ticket);
 		
 		return "redirect:/mvc/highrail/ticketlist";
 	}
