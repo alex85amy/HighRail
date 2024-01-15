@@ -30,5 +30,5 @@ public interface Dao {
     List<Ticket> findAllTicketsByUserId(Integer userid);
 
     //  新增列車資訊
-    void addTran(Tran tran);
+    int addTran(Tran tran);
 } 

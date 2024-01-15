@@ -1,5 +1,7 @@
 package com.example.dao;
 
+import java.sql.PreparedStatement;
+import java.sql.Statement;
 import java.util.List;
 import java.util.Optional;
 
@@ -8,6 +10,8 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 
 import com.example.entity.Ticket;
 import com.example.entity.Tran;
@@ -85,9 +89,30 @@ public class DaoImplMySQL implements Dao {
 	}
 
 	@Override
-	public void addTran(Tran tran) {
+	public int addTran(Tran tran) {
 		String sql = "insert into tran(tran_No, departureStation, arrivalStation, date, departureTime, arrivalTime) values(?, ?, ?, ?, ?, ?)";
 		jdbcTemplate.update(sql, tran.getTranNo(), tran.getDepartureStation(), tran.getArrivalStation(), tran.getDate(), tran.getDepartureTime(), tran.getArrivalTime());
+	
+
+		 KeyHolder keyHolder = new GeneratedKeyHolder();
+	     
+	     int affectedRows = jdbcTemplate.update(connection -> {
+	         PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+	         ps.setInt(1, tran.getTranNo());
+	         ps.setString(2, tran.getDepartureStation());
+	         ps.setString(3, tran.getArrivalStation());
+	         ps.setString(4, tran.getDate());
+	         ps.setString(5, tran.getDepartureTime());
+	         ps.setString(6, tran.getArrivalTime());
+	         return ps;
+	     }, keyHolder);
+
+	     if (keyHolder.getKey() != null) {
+	    	 tran.setTranId(keyHolder.getKey().intValue());
+	     }
+
+	     return affectedRows;
+		
 	}
 
 	// 為 Ticket 注入 tran

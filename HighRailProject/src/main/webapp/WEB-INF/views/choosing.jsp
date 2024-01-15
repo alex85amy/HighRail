@@ -44,8 +44,9 @@
                         <td class="cell">${ trainTime.departureTime }</td>
                         <td class="cell">${ trainTime.arrivalTime }</td>
                         <td class="cell">${ trainTime.price }</td>
+                        <input id="trainTime_${ trainTime.tranNo }" type="hidden" value='${trainTime.getJson()}' />
                         <td>
-							<button class="btn btn-primary" onclick="sendData('${trainTime}')" id="">
+							<button class="btn btn-primary" onclick="sendData('${ trainTime.tranNo }')" id="">
 								訂票
 							</button>
 						</td>
@@ -61,33 +62,26 @@
 <%@ include file="./footer.jsp" %>
 
 <script>
-    function choosing(tran) {
-        console.log('tran = ', tran);
-        
-    }
-    
-  
-   function sendData(tran) {
-        // 准备要发送的数据
-        var data = {
-        	tran: tran
-        };
+       
+   function sendData(tranNo) {
 
-        // 使用 jQuery 的 $.ajax 函数发送 POST 请求
-        $.ajax({
-            url: '/HighRailProject/mvc/highrail/booking/choosing/result',
-            type: 'POST',
-            contentType: 'application/json',
-            data: JSON.stringify(data),
-            success: function(response) {
-                // 请求成功的逻辑
-                console.log('请求成功:', response);
-            },
-            error: function(error) {
-                // 请求失败的逻辑
-                console.error('请求失败:', error);
-            }
-        });
+	   let tran = document.getElementById('trainTime_'+tranNo).value;
+   
+       $.ajax({
+           url: '/HighRailProject/mvc/highrail/booking/choosing/result',
+           type: 'POST',
+           contentType: 'application/json',
+           data: tran,
+           success: function(response) {
+               console.log('成功:', response);
+               window.location = '/HighRailProject/mvc/highrail/ticketlist';
+           },
+           error: function(error) {
+              
+               console.error('失敗:', error);
+           }
+       });
+
     }
  
    

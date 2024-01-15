@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Random;
 
+import javax.inject.Qualifier;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -169,6 +170,7 @@ public class HighRailController {
 
 	// 訂票結果
 	@PostMapping("/booking/choosing/result")
+	@ResponseBody
 	public String result(@RequestBody TrainTime trainTime,
 						Model model, HttpSession session) {
 		
@@ -192,7 +194,6 @@ public class HighRailController {
      	tran.setDepartureTime(departureTime);
      	tran.setArrivalTime(arrivalTime);
      	
-    	
 		dao.addTran(tran);
 		
 		
@@ -211,11 +212,12 @@ public class HighRailController {
 		char c = (char)(r.nextInt(5) + 'a');
 		String s = Character.toString(c);
 		ticket.setSiteNo(s);
+		
 		ticket.setPrice(Integer.parseInt(price));
 		
 		dao.addTicket(ticket);
 		
-		return "redirect:/mvc/highrail/ticketlist";
+		return "success:" + tran.getTranId();
 	}
 
 	// 取消訂票
