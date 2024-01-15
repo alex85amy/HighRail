@@ -10,6 +10,8 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -77,6 +79,7 @@ public class HighRailController {
 			return "login";
 		}
 	}
+	
 
 	// 登出
 	@GetMapping("/logout")
@@ -104,6 +107,35 @@ public class HighRailController {
 			dao.addUser(user);
 			return "login";
 		
+	}
+	
+	// 使用者 Profile
+		@GetMapping("/profile")
+		public String profile() {
+			return "profile";
+		}
+	
+	// 變更密碼
+	@PostMapping("/change_password")
+		public String changePassword(@RequestParam("oldPassword") String oldPassword, 
+									 @RequestParam("newPassword") List<String> newPasswords,
+									 HttpSession session,
+									 Model model) throws Exception {
+			
+			User user = (User)session.getAttribute("user");
+			
+			if(!user.getUserPassword().equals(oldPassword)) {
+				model.addAttribute("errorMessage", "原密碼錯誤");
+				return "profile";
+			}
+			if(!newPasswords.get(0).equals(newPasswords.get(1))) {
+				model.addAttribute("errorMessage", "二次新密碼不一致");
+				return "profile";
+			}
+			
+			dao.updateUserPassword(user.getUserId(),newPasswords.get(0));
+			
+			return "redirect:/mvc/highrail/logout";
 	}
 
 	// 時刻表頁面
@@ -171,6 +203,7 @@ public class HighRailController {
 	// 訂票結果
 	@PostMapping("/booking/choosing/result")
 	@ResponseBody
+//	@Transactional(propagation = Propagation.REQUIRED)
 	public String result(@RequestBody TrainTime trainTime,
 						Model model, HttpSession session) {
 		
@@ -202,6 +235,8 @@ public class HighRailController {
 		ticket.setUserId(user.getUserId());
 		
 		ticket.setTranId(tran.getTranId());
+		
+		System.out.println(tran.getTranId());
 		
 		int i;
 		i = (int) (Math.random()*10)+1;

@@ -10,6 +10,8 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 
@@ -52,6 +54,7 @@ public class DaoImplMySQL implements Dao {
 	}
 
 	@Override
+//	@Transactional(propagation = Propagation.REQUIRED)
 	public void addTicket(Ticket ticket) {
 		String sql = "insert into ticket(user_Id, tran_Id, car_No, site_No, price) values(?, ?, ?, ?, ?)";
 		jdbcTemplate.update(sql, ticket.getUserId(), ticket.getTranId(), ticket.getCarNo(), ticket.getSiteNo(),
@@ -89,6 +92,7 @@ public class DaoImplMySQL implements Dao {
 	}
 
 	@Override
+//	@Transactional(propagation = Propagation.REQUIRED)
 	public int addTran(Tran tran) {
 		String sql = "insert into tran(tran_No, departureStation, arrivalStation, date, departureTime, arrivalTime) values(?, ?, ?, ?, ?, ?)";
 		jdbcTemplate.update(sql, tran.getTranNo(), tran.getDepartureStation(), tran.getArrivalStation(), tran.getDate(), tran.getDepartureTime(), tran.getArrivalTime());
@@ -125,6 +129,13 @@ public class DaoImplMySQL implements Dao {
 		String sql = "select tran_Id, tran_No, departureStation, arrivalStation, date, departureTime, arrivalTime from tran where tran_Id = ?";
 		Tran tran = jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<>(Tran.class), ticket.getTranId());
 		ticket.setTran(tran);
+	}
+
+	@Override
+	public Boolean updateUserPassword(Integer userid, String newPassword) {
+		String sql = "update user set user_password = ? where user_Id = ?";
+		int rowcount = jdbcTemplate.update(sql, newPassword, userid);
+		return rowcount > 0;
 	}
 
 }

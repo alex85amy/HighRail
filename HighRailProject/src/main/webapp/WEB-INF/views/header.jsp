@@ -36,6 +36,9 @@
                 <li class="nav-item">
                     <a class="nav-link fs-4" href="/HighRailProject/mvc/highrail/ticketlist">票夾</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link fs-4" href="/HighRailProject/mvc/highrail/profile">密碼變更</a>
+                </li>
             </ul>
             <ul class="navbar-nav ml-auto mb-2 mb-lg-0">
 				<c:if test="${ empty sessionScope.user }">

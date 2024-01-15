@@ -31,4 +31,7 @@ public interface Dao {
 
     //  新增列車資訊
     int addTran(Tran tran);
+    
+    // 修改密碼
+    Boolean updateUserPassword(Integer userid, String newPassword);
 } 
