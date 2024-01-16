@@ -44,16 +44,20 @@
 			
 			<div>
 				<label for="username" class="form-label">Username</label> <input type="text" class="form-control"
-					id="username" name="username" value="" required>
+					id="username" name="username" value="aaa" required>
 				<div class="invalid-feedback">請輸入Username</div>
 			</div>
 			<div>
 				<label for="password" class="form-label">Password</label> <input type="text" class="form-control"
-					id="password" name="password" value="" required>
+					id="password" name="password" value="111" required>
 				<div class="invalid-feedback">請輸入Password</div>
 			</div>
-			<div class="d-flex justify-content-center mt-5">
-			</div> 
+			<div>
+				<label for="password" class="form-label">驗證碼</label> <input type="text" class="form-control"
+					id="code" name="code" value="" required>
+				<div class="invalid-feedback">請輸入驗證碼</div>
+				<img src="./getcode" alt="驗證碼" valign="middle">
+			</div>
 			<div class="d-flex justify-content-center mt-5">
 				<button class="btn btn-primary w-100" type="submit">Login</button>
 			</div>

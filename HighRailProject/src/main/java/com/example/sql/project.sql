@@ -90,10 +90,10 @@ SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 
 
--- 預設資料
+-- 預設資料 密碼"111"
 
 insert into user(user_Name, user_Password, user_Phone, user_Email) 
-values("aaa", "111", '0987654321', 'aaa@yahoo.com');
+values("aaa", "3z2KtiR5HSCv2cII9RO2ZQ==", '0987654321', 'aaa@yahoo.com');
 
 insert into tran(tran_No, date, departureStation, arrivalStation, departureTime, arrivalTime) 
 values(2001, "2024-12-31", "台北", "板橋","16:10", "16:15");

@@ -69,6 +69,7 @@
     <mvc:interceptors>
         <mvc:interceptor>
             <mvc:mapping path="/highrail/**"/>
+            <mvc:exclude-mapping path="/highrail/getcode"/>
             <mvc:exclude-mapping path="/highrail/main"/>
             <mvc:exclude-mapping path="/highrail/login"/>
             <mvc:exclude-mapping path="/highrail/timetable"/>
