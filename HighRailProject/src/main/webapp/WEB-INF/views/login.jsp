@@ -48,7 +48,7 @@
 				<div class="invalid-feedback">請輸入Username</div>
 			</div>
 			<div>
-				<label for="password" class="form-label">Password</label> <input type="text" class="form-control"
+				<label for="password" class="form-label">Password</label> <input type="password" class="form-control"
 					id="password" name="password" value="111" required>
 				<div class="invalid-feedback">請輸入Password</div>
 			</div>

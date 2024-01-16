@@ -51,7 +51,7 @@
 						</div>
 						<div>
 							<label for="password" class="form-label">Password</label>
-							<sp:input type="text" class="form-control" path="userPassword"
+							<sp:input type="password" class="form-control" path="userPassword"
 								value="" required="required" />
 							<div class="invalid-feedback">請輸入Password</div>
 						</div>
