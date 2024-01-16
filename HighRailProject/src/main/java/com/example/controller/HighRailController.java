@@ -15,8 +15,12 @@ import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -38,6 +42,7 @@ import com.example.util.TimeTableAPI;
 
 /**
  * http://localhost:8080/HighRailProject/mvc/highrail
+ * http://localhost:8080/HighRailProject/mvc/highrail/main
  */
 @Controller
 @RequestMapping("/highrail")
@@ -45,11 +50,16 @@ public class HighRailController {
 
 	@Autowired
 	private DaoImplMySQL dao;
+	
+	Logger logger = LoggerFactory.getLogger(getClass());
 
 	// 進入首頁
 	@GetMapping("/main")
 	// http://localhost:8080/HighRailProject/mvc/highrail/main
 	public String main() {
+		
+		logger.info("hello 高鐵訂票首頁");
+		
 		return "main";
 	}
 
@@ -132,6 +142,7 @@ public class HighRailController {
 			//-------------------------------------------------------------------------------------------
 			if (user.getUserPassword().equals(encryptedPasswordECBBase64)) { // 比對加密過後的 password 是否相同
 				session.setAttribute("user", user); // 將 user 物件放入到 session 變數中
+				logger.info("使用者登入");
 				return "redirect:/mvc/highrail/main"; // OK, 導向前台首頁
 			} else {
 				session.invalidate(); // session 過期失效
@@ -178,6 +189,7 @@ public class HighRailController {
 			user.setUserPassword(encryptedPasswordECBBase64);
 
 			dao.addUser(user);
+			logger.info("使用者註冊");
 			return "login";
 		
 	}
@@ -220,6 +232,7 @@ public class HighRailController {
 			// 進行密碼變更
 			dao.updateUserPassword(user.getUserId(),encryptedNewPasswordECBBase64);
 			
+			logger.info("密碼變更");
 			return "redirect:/mvc/highrail/logout";
 	}
 
@@ -280,7 +293,7 @@ public class HighRailController {
 	// 訂票結果
 	@PostMapping("/booking/choosing/result")
 	@ResponseBody
-//	@Transactional(propagation = Propagation.REQUIRED)
+	@Transactional(propagation = Propagation.REQUIRED)
 	public String result(@RequestBody TrainTime trainTime,
 						Model model, HttpSession session) {
 		
@@ -329,6 +342,8 @@ public class HighRailController {
 		
 		dao.addTicket(ticket);
 		
+		logger.info("訂票成功");
+		
 		return "success:" + tran.getTranId();
 	}
 
@@ -336,6 +351,7 @@ public class HighRailController {
 	@GetMapping("/ticketlist/cancel")
 	public String cancelticket(@RequestParam("ticketId") Integer ticketId, HttpSession session) {
 		dao.removeTicket(ticketId);
+		logger.info("取消訂票");
 		return "redirect:/mvc/highrail/ticketlist";
 	}
 

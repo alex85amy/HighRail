@@ -5,7 +5,7 @@
 <configuration status="WARN" monitorInterval="30">
 
     <properties>
-        <property name="LOG_HOME">${sys:user.home}</property>
+        <property name="LOG_HOME">C:\</property> <!-- ${sys:user.home} -->
         <property name="pattern">[%d{HH:mm:ss:SSS}] [%-5p] - %l - %m%n</property>
         <property name="console_pattern">
         	%style{%d{ISO8601}}{bright,green} %highlight{%-5p} [%style{%t}{bright,blue}] %style{%l}{bright,yellow}: %m%n%style{%throwable}{red}

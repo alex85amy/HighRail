@@ -53,14 +53,6 @@ public class DaoImplMySQL implements Dao {
 		}
 	}
 
-	@Override
-//	@Transactional(propagation = Propagation.REQUIRED)
-	public void addTicket(Ticket ticket) {
-		String sql = "insert into ticket(user_Id, tran_Id, car_No, site_No, price) values(?, ?, ?, ?, ?)";
-		jdbcTemplate.update(sql, ticket.getUserId(), ticket.getTranId(), ticket.getCarNo(), ticket.getSiteNo(),
-								 ticket.getPrice());
-
-	}
 
 	@Override
 	public boolean removeTicket(Integer ticketId) {
@@ -92,7 +84,15 @@ public class DaoImplMySQL implements Dao {
 	}
 
 	@Override
-//	@Transactional(propagation = Propagation.REQUIRED)
+	@Transactional(propagation = Propagation.REQUIRED)
+	public void addTicket(Ticket ticket) {
+		String sql = "insert into ticket(user_Id, tran_Id, car_No, site_No, price) values(?, ?, ?, ?, ?)";
+		jdbcTemplate.update(sql, ticket.getUserId(), ticket.getTranId(), ticket.getCarNo(), ticket.getSiteNo(),
+				ticket.getPrice());		
+	}
+	
+	@Override
+	@Transactional(propagation = Propagation.REQUIRED)
 	public int addTran(Tran tran) {
 		String sql = "insert into tran(tran_No, departureStation, arrivalStation, date, departureTime, arrivalTime) values(?, ?, ?, ?, ?, ?)";
 		jdbcTemplate.update(sql, tran.getTranNo(), tran.getDepartureStation(), tran.getArrivalStation(), tran.getDate(), tran.getDepartureTime(), tran.getArrivalTime());
