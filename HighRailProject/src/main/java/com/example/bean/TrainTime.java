@@ -25,7 +25,6 @@ public class TrainTime {
 	
 	private String price;
 	
-
 	public String getJson() {
 		return new Gson().toJson(this);
 	}
