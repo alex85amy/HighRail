@@ -334,7 +334,7 @@ public class HighRailController {
 		ticket.setCarNo(iInteger);
 		
 		Random r = new Random();
-		char c = (char)(r.nextInt(5) + 'a');
+		char c = (char)(r.nextInt(5) + 'A');
 		String s = Character.toString(c);
 		ticket.setSiteNo(s);
 		

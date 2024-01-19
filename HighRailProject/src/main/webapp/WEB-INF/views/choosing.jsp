@@ -66,7 +66,10 @@
    function sendData(tranNo) {
 
 	   let tran = document.getElementById('trainTime_'+tranNo).value;
-   
+	   
+	   var result = confirm("確定訂票？");
+
+	   if (result) {
        $.ajax({
            url: '/HighRailProject/mvc/highrail/booking/choosing/result',
            type: 'POST',
@@ -81,34 +84,14 @@
                console.error('失敗:', error);
            }
        });
+	       
+	   } else {
+		   
+	   }
+
+   
     }
    
-   <!-- 
-   function sendData(tranNo) {
-	    let tran = document.getElementById('trainTime_' + tranNo).value;
-
-	    fetch('/HighRailProject/mvc/highrail/booking/choosing/result', {
-	        method: 'POST',
-	        headers: {
-	            'Content-Type': 'application/json'
-	        },
-	        body: JSON.stringify(tran)
-	    })
-	    .then(response => {
-	        if (!response.ok) {
-	            throw new Error('網路響應不正確');
-	        }
-	        return response.json();
-	    })
-	    .then(data => {
-	        console.log('成功:', data);
-	        window.location = '/HighRailProject/mvc/highrail/ticketlist';
-	    })
-	    .catch(error => {
-	        console.error('失敗:', error);
-	    });
-	}
-   -->
  
 </script>
 

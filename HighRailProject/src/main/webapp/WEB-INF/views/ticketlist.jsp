@@ -10,7 +10,12 @@
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 	<script type="text/javascript">
 				function cancelticket(ticketId) {
-				window.location.href='./ticketlist/cancel?ticketId=' + ticketId;
+					var result = confirm("確定刪除訂票？");
+					if (result) {
+						window.location.href='./ticketlist/cancel?ticketId=' + ticketId;
+					} else {
+					}
+					
 			}
 			
 		</script>
