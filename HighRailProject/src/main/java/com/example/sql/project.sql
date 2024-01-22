@@ -96,7 +96,7 @@ insert into user(user_Name, user_Password, user_Phone, user_Email)
 values("aaa", "3z2KtiR5HSCv2cII9RO2ZQ==", '0987654321', 'aaa@yahoo.com');
 
 insert into tran(tran_No, date, departureStation, arrivalStation, departureTime, arrivalTime) 
-values(2001, "2024-12-31", "台北", "板橋","16:10", "16:15");
+values(2001, "2024-12-31", "台北", "左營","16:10", "16:15");
 
 insert into ticket(user_Id, tran_Id, car_No, site_No, price) 
 values(101, 301, 10, "A", 1500);
