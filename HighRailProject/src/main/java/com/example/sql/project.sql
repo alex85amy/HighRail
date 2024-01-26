@@ -99,4 +99,4 @@ insert into tran(tran_No, date, departureStation, arrivalStation, departureTime,
 values(2001, "2024-12-31", "台北", "左營","16:10", "16:15");
 
 insert into ticket(user_Id, tran_Id, car_No, site_No, price) 
-values(101, 301, 10, "A", 1500);
+values(101, 301, 10, "A", 1490);

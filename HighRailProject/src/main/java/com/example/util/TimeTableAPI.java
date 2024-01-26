@@ -13,7 +13,7 @@ public class TimeTableAPI {
 	
 	public static void main(String[] args) throws Exception {
 		
-		List<TrainTime> trainTimes = getTrainTimes("1000", "1070", "2024-01-12");
+		List<TrainTime> trainTimes = getTrainTimes("1000", "1070", "2024-02-12");
 		 
 		System.out.println(trainTimes);
 	}
@@ -21,19 +21,39 @@ public class TimeTableAPI {
 	public static List<TrainTime> getTrainTimes(String fromStation, String toStation,String departureDate) throws Exception {
 		String timeTable = TimeTableAPI.timeTable(fromStation, toStation, departureDate);
 		String fare = PriceTDXApi.getODFare(fromStation, toStation);
-		String price = JsonParser.parseString(fare).getAsJsonArray().get(0)
-				.getAsJsonObject().get("Fares")
-				.getAsJsonArray().get(3)
-				.getAsJsonObject().get("Price")
-				.getAsString();
+//		String price = JsonParser.parseString(fare).getAsJsonArray().get(0)
+//				.getAsJsonObject().get("Fares")
+//				.getAsJsonArray().get(3)
+//				.getAsJsonObject().get("Price")
+//				.getAsString();
+		int ticketTypeFilter = 1;
+        int fareClassFilter = 1;
+        int cabinClassFilter = 1;
+
+        JsonArray faresArray = JsonParser.parseString(fare).getAsJsonArray();
+        JsonObject faresObject = faresArray.get(0).getAsJsonObject();
+        JsonArray fares = faresObject.getAsJsonArray("Fares");
+
+        for (int i = 0; i < fares.size(); i++) {
+            JsonObject fareInfo = fares.get(i).getAsJsonObject();
+
+            // 应用过滤器
+            if (fareInfo.get("TicketType").getAsInt() == ticketTypeFilter &&
+                fareInfo.get("FareClass").getAsInt() == fareClassFilter &&
+                fareInfo.get("CabinClass").getAsInt() == cabinClassFilter) {
+                
+                // 提取相应的信息
+                String price = fareInfo.get("Price").getAsString();
+            System.out.println(price);
+        
 		
 		List<TrainTime> trainTimes = new ArrayList<>();
 		String startingStationName = startingStationName(timeTable);
 		String endingStationName = endingStationName(timeTable);	
 		JsonArray jsonArray = JsonParser.parseString(timeTable).getAsJsonArray();
-		 for (int i = 0; i < jsonArray.size(); i++) {
+		 for (int i1 = 0; i1 < jsonArray.size(); i1++) {
 			 
-			 JsonObject jsonObject = jsonArray.get(i).getAsJsonObject();
+			 JsonObject jsonObject = jsonArray.get(i1).getAsJsonObject();
 	         JsonObject dailyTrainInfo = jsonObject.getAsJsonObject("DailyTrainInfo");
 	         JsonObject originStopTime = jsonObject.getAsJsonObject("OriginStopTime");
 	         JsonObject destinationStopTime = jsonObject.getAsJsonObject("DestinationStopTime");
@@ -53,6 +73,8 @@ public class TimeTableAPI {
 			 trainTimes.add(trainTime);
 		 }
 		 return trainTimes;
+            }}
+		return null;
 	}
 	
 	public static  String timeTable(String fromStation, String toStation,String departureDate) throws Exception {

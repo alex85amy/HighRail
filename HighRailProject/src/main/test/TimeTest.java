@@ -1,4 +1,7 @@
 
+import java.util.List;
+
+import com.example.bean.TrainTime;
 import com.example.util.TimeTableAPI;
 
 
@@ -15,8 +18,8 @@ public class TimeTest {
 //
 //		            System.out.println("Departure Time: " + departureTime);
 //		        }
-			String timeTable = TimeTableAPI.timeTable("1000", "1070", "2024-01-19");
-			String test = TimeTableAPI.departureTime(timeTable);
-			System.out.println(test);
+			List<TrainTime> timeTable = TimeTableAPI.getTrainTimes("1000", "1070", "2024-02-19");
+		//	String test = TimeTableAPI.departureTime(timeTable);
+			System.out.println(timeTable);
 	}
 }
