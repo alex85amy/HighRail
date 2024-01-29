@@ -44,7 +44,7 @@ public class TimeTableAPI {
                 
                 // 提取相应的信息
                 String price = fareInfo.get("Price").getAsString();
-            System.out.println(price);
+                System.out.println(price);
         
 		
 		List<TrainTime> trainTimes = new ArrayList<>();
